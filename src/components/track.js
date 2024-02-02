@@ -4,19 +4,19 @@ import React, {useEffect, useState} from 'react';
 import IconBtn from "@/components/iconBtn";
 
 const getImage = async (id) => {
-    const response = await fetch(`http://localhost:3000/api/tracksImage/${id}`)
+    const response = await fetch(`/api/tracksImage/${id}`)
 
     return `data:image/png;base64, ${await response.json()}`;
 }
 
 const getTrackAudio = async (path) => {
-    const response = await fetch(`http://localhost:3000/api/trackData/?path=${path}`, {cache: 'no-cache'})
+    const response = await fetch(`/api/trackData/?path=${path}`, {cache: 'no-cache'})
 
     return await response.blob()
 }
 
 const getImageBlob = async (path) => {
-    const response = await fetch(`http://localhost:3000/api/image/?path=${path}`, {cache: 'no-cache'})
+    const response = await fetch(`/api/image/?path=${path}`, {cache: 'no-cache'})
 
     return await response.blob()
 }
@@ -61,15 +61,27 @@ const Track = ({
 
     let formattedDate = `${day}.${month}.${year}`;
 
+    const getStatusImg = () => {
+        if (playCount > 100000){
+            return '/top-charts.svg'
+        }
+        else if (playCount > 50000){
+            return '/medium-charts.svg'
+        }
+        else {
+            return '/low-charts.svg'
+        }
+    }
+
     return (
-        <div className='flex gap-4 text-[#333]'>
-            <div>
-                <img className='min-w-[160px]' src={image} width='160px' alt='track'/>
+        <div className='flex gap-4 text-[#333] group'>
+            <div className='group-hover:pl-5 ease-linear duration-100'>
+                <img className='min-w-[160px] max-h-[160px]' src={image} width='160px' alt='track'/>
             </div>
             <div className='flex flex-col justify-between w-full pt-2'>
                 <div className='flex w-full'>
-                    <a className='flex items-center justify-center rounded-[100%] bg-[#9388D8] w-[36px] h-[36px]'>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 32 32"><path fill="white" d="M18.65.226A16 16 0 0 0 16 0C7.16 0 0 7.16 0 16c0 3.394 1.067 6.53 2.86 9.131c1.1-1.616 3.637-2.731 6.578-2.731c2.02 0 3.847.533 5.156 1.39zm8.502 4.315c2.763 6.11.339 9.374.339 9.374c-1.875-5.64-7.305-6.464-7.305-6.464s-3.572 19.248-3.572 19.49c0 2.085-2.214 3.847-5.22 4.38A16.01 16.01 0 0 0 16 32c8.84 0 16-7.16 16-16c0-4.493-1.859-8.55-4.848-11.459"></path></svg>
+                    <a className='flex items-center justify-center rounded-full bg-[#9388D8] w-[36px] h-[36px]'>
+                        <img src={getStatusImg()} alt='status'/>
                     </a>
                     <div className='inline ml-3 w-full'>
                         <div className='flex justify-between'>
@@ -85,7 +97,7 @@ const Track = ({
                     </div>
                 </div>
                 <div className='flex items-center gap-3 text-[15px]'>
-                    <audio className='h-[45px]' controls={true} src={audio} type='audio/mp3'/>
+                    <audio className='h-[45px] w-full rounded bg-gray-100' controls={true} src={audio} type='audio/mp3'/>
                 </div>
                 <div className='flex justify-between'>
                     <div className='flex gap-3'>

@@ -7,11 +7,38 @@ import RegModal from "@/components/regModal";
 import {useRouter} from "next/navigation";
 import {useAuth} from "@/components/authProvider";
 
+async function getUser(id){
+    const response = await fetch(`/api/users/${id}`);
+
+    return await response.json();
+}
+
+const getImageBlob = async (path) => {
+    const response = await fetch(`/api/image/?path=${path}`)
+
+    return response.blob()
+}
+
 const Header = () => {
     const router = useRouter();
-    const [isLogin, setIsLogin] = useState(() => localStorage.getItem('isAuth') ? localStorage.getItem('isAuth') > 0 : false)
+    const [isLogin, setIsLogin] = useState(false)
+    const [loggedUserAvatar, setLoggedUserAvatar] = useState('')
 
     const { addLogoutCallback, addLoginCallback } = useAuth();
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const user = await getUser(localStorage.getItem('isAuth'));
+
+            const userAvatarBlob = await getImageBlob(user[0].AvatarUrl);
+            const userAvatarUrl = URL.createObjectURL(userAvatarBlob);
+            setLoggedUserAvatar(userAvatarUrl)
+        }
+
+        fetchData()
+        setIsLogin(localStorage.getItem('isAuth') ? localStorage.getItem('isAuth') > 0 : false)
+
+    }, []);
 
     useEffect(() => {
         const handleLogout = () => {
@@ -51,7 +78,7 @@ const Header = () => {
                             isLogin
                                 ?
                                 <>
-                                    <img className='w-[36px] h-[36px] object-cover rounded-full cursor-pointer' src='/avatar.png' alt='avatar' onClick={ () => router.push(`/users/${localStorage.getItem('isAuth')}`)}/>
+                                    <img className='w-[36px] h-[36px] object-cover rounded-full cursor-pointer' src={loggedUserAvatar} alt='avatar' onClick={ () => router.push(`/users/${localStorage.getItem('isAuth')}`)}/>
                                 </>
                                 :
                                 <>

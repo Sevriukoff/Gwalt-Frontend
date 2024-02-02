@@ -37,7 +37,7 @@ const ArtistCard = (
     return (
         <div className='flex w-[700px] cursor-pointer group hover:shadow-lg duration-300 ease-in-out' onClick={() => router.push(`/users/${id}`)}>
             <img className='min-w-[230px] h-[200px] object-cover transition-transform transform-gpu group-hover:scale-105 duration-300 ease-in-out' src={image} alt='avatar' />
-            <div className='flex flex-col justify-between border border-l-0 border-[#9388D8] px-5 py-2.5'>
+            <div className='flex flex-col w-full justify-between border border-l-0 border-[#9388D8] px-5 py-2.5'>
                 <div>
                     <h3 className='text-2xl font-medium mb-1 group-hover:text-[#9388D8] duration-300 ease-in-out'>{name}</h3>
                     {
@@ -48,7 +48,7 @@ const ArtistCard = (
                         </div>
                     }
                     <p className='text-[15px] leading-5 text-gray-500'>
-                        {description}
+                        {description ? description : 'Описание отсутствует'}
                     </p>
                 </div>
                 <div className='flex justify-between'>

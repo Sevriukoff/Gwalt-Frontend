@@ -2,7 +2,7 @@ import ArtistCard from "@/components/artistCard";
 import React from "react";
 
 const getArtists = async () => {
-    const response = await fetch('http://localhost:3000/api/users/?genres=true&tracksCount=true&likesCount=true&playsCount=true')
+    const response = await fetch('http://localhost:3000/api/users/?genres=true&tracksCount=true&likesCount=true&playsCount=true', { cache: 'no-cache' })
 
     return await response.json();
 }
@@ -16,7 +16,7 @@ export default async function Home() {
                 className='w-full flex items-center justify-center absolute h-[360px] p-8'
                 style={{
                     backgroundImage: `url(https://images.wallpaperscraft.ru/image/single/el_derevo_siluet_185231_3840x2400.jpg)`,
-
+                    objectFit: 'cover',
                     backgroundPosition: 'center',
                 }}
             >

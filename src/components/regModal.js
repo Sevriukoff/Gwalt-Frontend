@@ -36,7 +36,7 @@ const RegModal = () => {
 
         if (!users.find(item => item.Email === email)){
             const newUser = {UserName: login, Email: email, PasswordHash: sha256(password)}
-            const res = await fetch('http://localhost:3000/api/users',{
+            const res = await fetch('/api/users',{
                 method: 'POST',
                 body: JSON.stringify(newUser),
                 headers: {
@@ -58,6 +58,13 @@ const RegModal = () => {
         return emailRegex.test(email);
     }
 
+    function closeModal() {
+        setEmail('')
+        setLogin('')
+        setPassword('')
+        setShowModal(false)
+    }
+
     return (
         <>
             <button className='bg-[#9388D8] text-white px-2 py-[1px] rounded h-[28px] hover:bg-[#8476DD] ease-in duration-100' onClick={() => setShowModal(true)}>Создать аккаунт</button>
@@ -70,7 +77,7 @@ const RegModal = () => {
                         <input className='border-2 rounded px-3 py-2' placeholder='Ваш пароль' onChange={(e) => setPassword(e.target.value)}/>
                         <button className='bg-[#9388D8] text-white rounded p-2 disabled:bg-[#999] hover:bg-[#8476DD] ease-in duration-100' disabled={!(isValidEmail(email) && login.length >= 3 && password.length >= 3)} onClick={submitLogin}>Продолжить</button>
                         <p className={`text-xs text-[#999] text-center ${error ? 'opacity-100' : 'opacity-0'}`}>{error ? error : 'error'}</p>
-                        <button className='absolute top-[8px] right-[4px] w-[20px] h-[20px] indent-[20px] overflow-hidden bg-no-repeat bg-[length:85%] bg-[url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHZpZXdCb3g9IjAgMCAyMCAyMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48dGl0bGU+Q2xvc2U8L3RpdGxlPjxwYXRoIGQ9Ik0xMCA4LjU0NUwzLjQ1NSAyIDIgMy40NTUgOC41NDUgMTAgMiAxNi41NDUgMy40NTUgMTggMTAgMTEuNDU1IDE2LjU0NSAxOCAxOCAxNi41NDUgMTEuNDU1IDEwIDE4IDMuNDU1IDE2LjU0NSAyIDEwIDguNTQ1eiIgZmlsbD0iIzMzMyIgZmlsbC1ydWxlPSJldmVub2RkIi8+PC9zdmc+Cg==)]' onClick={() => setShowModal(false)}>Close</button>
+                        <button className='absolute top-[8px] right-[4px] w-[20px] h-[20px] indent-[20px] overflow-hidden bg-no-repeat bg-[length:85%] bg-[url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHZpZXdCb3g9IjAgMCAyMCAyMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48dGl0bGU+Q2xvc2U8L3RpdGxlPjxwYXRoIGQ9Ik0xMCA4LjU0NUwzLjQ1NSAyIDIgMy40NTUgOC41NDUgMTAgMiAxNi41NDUgMy40NTUgMTggMTAgMTEuNDU1IDE2LjU0NSAxOCAxOCAxNi41NDUgMTEuNDU1IDEwIDE4IDMuNDU1IDE2LjU0NSAyIDEwIDguNTQ1eiIgZmlsbD0iIzMzMyIgZmlsbC1ydWxlPSJldmVub2RkIi8+PC9zdmc+Cg==)]' onClick={closeModal}>Close</button>
                     </div>
                     <p className='text-xs text-[#999]'>
                         Регистрируясь, вы соглашаетесь с тем, что мы можем использовать предоставленные

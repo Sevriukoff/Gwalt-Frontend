@@ -135,7 +135,7 @@ export async function POST(req){
     const data = await req.json()
 
     const query = `
-        INSERT INTO \`Users\` (\`UserID\`, \`Username\`, \`Email\`, \`PasswordHash\`, \`RegistrationDate\`, \`AvatarUrl\`, \`ShortDescription\`, \`Description\`, \`BackgroundUrl\`) VALUES (NULL, '${data.UserName}', '${data.Email}', '${data.PasswordHash}', CURRENT_TIMESTAMP, NULL, NULL, NULL, NULL);
+        INSERT INTO \`Users\` (\`UserID\`, \`Username\`, \`Email\`, \`PasswordHash\`, \`RegistrationDate\`, \`AvatarUrl\`, \`ShortDescription\`, \`Description\`, \`BackgroundUrl\`) VALUES (NULL, '${data.UserName}', '${data.Email}', '${data.PasswordHash}', CURRENT_TIMESTAMP, '/defaults/avatar.jpg', NULL, NULL, '/defaults/background.jpg');
     `;
 
     console.log(query)

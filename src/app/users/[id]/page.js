@@ -30,7 +30,7 @@ const userProfile = ( { params: { id } } ) => {
 
     const [tracks, setTracks] = useState([]);
 
-    const [isLogin, setIsLogin] = useState(() => localStorage.getItem('isAuth') ? localStorage.getItem('isAuth') > 0 : false)
+    const [isLogin, setIsLogin] = useState(false)
     const { performLogout, addLogoutCallback, addLoginCallback } = useAuth()
 
     useEffect(() => {
@@ -64,6 +64,8 @@ const userProfile = ( { params: { id } } ) => {
         }
 
         fetchData()
+
+        setIsLogin(localStorage.getItem('isAuth') ? localStorage.getItem('isAuth') > 0 : false)
     }, []);
 
     return (
@@ -81,7 +83,7 @@ const userProfile = ( { params: { id } } ) => {
                         <img className='rounded-[100%] h-[200px] object-cover' src={avatar} width='200px' height='200px' alt='avatar' />
                         <div className='flex flex-col justify-center gap-3'>
                             <h2 className='text-2xl text-white bg-black bg-opacity-80 px-2 py-1'>{user.Username}</h2>
-                            <h3 className='text-sm text-white bg-black bg-opacity-80 px-2 py-1'>{user.ShortDescription}</h3>
+                            {user.ShortDescription && <h3 className='text-sm text-white bg-black bg-opacity-80 px-2 py-1'>{user.ShortDescription}</h3>}
                         </div>
                     </div>
                 </div>
@@ -106,8 +108,12 @@ const userProfile = ( { params: { id } } ) => {
                 <div className='grid grid-cols-[3fr_1fr] grid-rows-[auto_auto_auto] mt-5'>
                     <div className='flex flex-col gap-10 row-start-1 row-span-3 pr-10 border-r'>
                         {
+                            tracks.length > 0
+                                ?
                             tracks.map(t =>
                                 <Track id={t.TrackID} imgUrl={t.ImageUrl} audioUrl={t.AudioUrl} author={user.Username} title={t.Title} date={t.ReleaseDate} genres={t.GenreList} like={t.Likes} share={t.Shares} comment={t.Comments} playCount={t.Plays}/>)
+                                :
+                                <p>Треки отсутствуют</p>
                         }
                     </div>
                     <div className='row-start-1 pl-5'>
