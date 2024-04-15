@@ -1,11 +1,13 @@
 'use client'
 
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import Link from "next/link";
 import ModalLogin from "@/components/modalLogin";
 import RegModal from "@/components/regModal";
 import {useRouter} from "next/navigation";
 import {useAuth} from "@/components/authProvider";
+import SearchBar from "@/components/searchBar";
+import SearchResults from "@/components/searchResults";
 
 async function getUser(id){
     const response = await fetch(`/api/users/${id}`);
@@ -23,6 +25,7 @@ const Header = () => {
     const router = useRouter();
     const [isLogin, setIsLogin] = useState(false)
     const [loggedUserAvatar, setLoggedUserAvatar] = useState('')
+    const [searchResults, setSearchResults] = useState({})
 
     const { addLogoutCallback, addLoginCallback } = useAuth();
 
@@ -30,7 +33,7 @@ const Header = () => {
         const fetchData = async () => {
             const user = await getUser(localStorage.getItem('isAuth'));
 
-            const userAvatarBlob = await getImageBlob(user[0].AvatarUrl);
+            const userAvatarBlob = await getImageBlob(user[0].AvatarUrl); //TODO: Fix exception.
             const userAvatarUrl = URL.createObjectURL(userAvatarBlob);
             setLoggedUserAvatar(userAvatarUrl)
         }
@@ -70,7 +73,7 @@ const Header = () => {
                         </ul>
                     </div>
                     <div className='my-auto relative'>
-                        <input className='rounded w-full h-[27px] px-2 bg-[#e5e5e5]' placeholder='Поиск аристов, треков, альбомов'/>
+                        <SearchBar/>
                         <button className='absolute right-[13px] top-[7px] w-[15px] h-[15px] bg-[url(https://a-v2.sndcdn.com/assets/images/search-dbfe5cbb.svg)]'/>
                     </div>
                     <div className={`flex ${isLogin && 'flex-row-reverse'} items-center gap-5`}>

@@ -9,7 +9,6 @@ const getArtists = async () => {
 
 export default async function Home() {
     const artists = await getArtists()
-
     return(
         <div className='flex flex-col items-center'>
             <div

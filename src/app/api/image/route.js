@@ -4,7 +4,6 @@ import { Writable } from 'stream';
 export async function GET(req, { params }) {
     const { searchParams } = new URL(req.url)
     const imgPath = searchParams.get('path');
-    console.log(imgPath)
 
     const ftpClient = new ftp.Client();
     await ftpClient.access({
