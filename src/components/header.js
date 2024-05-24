@@ -2,59 +2,9 @@
 
 import React, {useEffect, useRef, useState} from 'react';
 import Link from "next/link";
-import ModalLogin from "@/components/modalLogin";
-import RegModal from "@/components/regModal";
-import {useRouter} from "next/navigation";
-import {useAuth} from "@/components/authProvider";
 import SearchBar from "@/components/searchBar";
-import SearchResults from "@/components/searchResults";
-
-async function getUser(id){
-    const response = await fetch(`/api/users/${id}`);
-
-    return await response.json();
-}
-
-const getImageBlob = async (path) => {
-    const response = await fetch(`/api/image/?path=${path}`)
-
-    return response.blob()
-}
 
 const Header = () => {
-    const router = useRouter();
-    const [isLogin, setIsLogin] = useState(false)
-    const [loggedUserAvatar, setLoggedUserAvatar] = useState('')
-    const [searchResults, setSearchResults] = useState({})
-
-    const { addLogoutCallback, addLoginCallback } = useAuth();
-
-    useEffect(() => {
-        const fetchData = async () => {
-            const user = await getUser(localStorage.getItem('isAuth'));
-
-            const userAvatarBlob = await getImageBlob(user[0].AvatarUrl); //TODO: Fix exception.
-            const userAvatarUrl = URL.createObjectURL(userAvatarBlob);
-            setLoggedUserAvatar(userAvatarUrl)
-        }
-
-        fetchData()
-        setIsLogin(localStorage.getItem('isAuth') ? localStorage.getItem('isAuth') > 0 : false)
-
-    }, []);
-
-    useEffect(() => {
-        const handleLogout = () => {
-            setIsLogin(false)
-        };
-
-        const handleLogin = () => {
-            setIsLogin(true)
-        };
-
-        addLogoutCallback(handleLogout);
-        addLoginCallback(handleLogin)
-    }, [addLogoutCallback, addLoginCallback]);
 
     return (
         <header className='bg-[#333] border-b-2 border-b-[#ccc] font-light text-sm'>
@@ -76,19 +26,7 @@ const Header = () => {
                         <SearchBar/>
                         <button className='absolute right-[13px] top-[7px] w-[15px] h-[15px] bg-[url(https://a-v2.sndcdn.com/assets/images/search-dbfe5cbb.svg)]'/>
                     </div>
-                    <div className={`flex ${isLogin && 'flex-row-reverse'} items-center gap-5`}>
-                        {
-                            isLogin
-                                ?
-                                <>
-                                    <img className='w-[36px] h-[36px] object-cover rounded-full cursor-pointer' src={loggedUserAvatar} alt='avatar' onClick={ () => router.push(`/users/${localStorage.getItem('isAuth')}`)}/>
-                                </>
-                                :
-                                <>
-                                    <ModalLogin/>
-                                    <RegModal/>
-                                </>
-                        }
+                    <div className={`flex items-center gap-5`}>
                         <button className='text-[#ccc] hover:text-white ease-in duration-100'>Загрузить</button>
                     </div>
                 </nav>

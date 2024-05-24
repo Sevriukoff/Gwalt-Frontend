@@ -3,29 +3,11 @@
 import React, {useEffect, useState} from 'react';
 import IconBtn from "@/components/iconBtn";
 
-const getImage = async (id) => {
-    const response = await fetch(`/api/tracksImage/${id}`)
-
-    return `data:image/png;base64, ${await response.json()}`;
-}
-
-const getTrackAudio = async (path) => {
-    const response = await fetch(`/api/trackData/?path=${path}`, {cache: 'no-cache'})
-
-    return await response.blob()
-}
-
-const getImageBlob = async (path) => {
-    const response = await fetch(`/api/image/?path=${path}`, {cache: 'no-cache'})
-
-    return await response.blob()
-}
-
 const Track = ({
         id = 0,
-        author = 'author name',
-        title = 'track name',
-        trackDuration= '2:59',
+        author = '',
+        title = '',
+        trackDuration= 0,
         imgUrl = '',
         audioUrl = '',
         date = 'date',
@@ -35,23 +17,6 @@ const Track = ({
         playCount = 0,
         comment = 0
     }) => {
-
-    const [image, setImage] = useState('');
-    const [audio, setAudio] = useState('');
-
-    useEffect( () => {
-        const fetchData = async () => {
-            const trackAudio = await getTrackAudio(audioUrl)
-            const trackAudioUrl = URL.createObjectURL(trackAudio)
-            setAudio(trackAudioUrl)
-
-            const trackImg = await getImageBlob(imgUrl)
-            const trackImgUrl = URL.createObjectURL(trackImg)
-            setImage(trackImgUrl)
-        }
-
-        fetchData()
-    }, []);
 
     let dateObj = new Date(date);
 
@@ -76,7 +41,7 @@ const Track = ({
     return (
         <div className='flex gap-4 text-[#333] group'>
             <div className='group-hover:pl-5 ease-linear duration-100'>
-                <img className='min-w-[160px] max-h-[160px]' src={image} width='160px' alt='track'/>
+                <img className='min-w-[160px] max-h-[160px]' src={imgUrl} width='160px' alt='track'/>
             </div>
             <div className='flex flex-col justify-between w-full pt-2'>
                 <div className='flex w-full'>
@@ -97,7 +62,7 @@ const Track = ({
                     </div>
                 </div>
                 <div className='flex items-center gap-3 text-[15px]'>
-                    <audio className='h-[45px] w-full rounded bg-gray-100' controls={true} src={audio} type='audio/mp3'/>
+                    <audio className='h-[45px] w-full rounded bg-gray-100' controls={true} src={audioUrl} type='audio/mp3'/>
                 </div>
                 <div className='flex justify-between'>
                     <div className='flex gap-3'>
