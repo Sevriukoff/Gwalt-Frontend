@@ -39,3 +39,31 @@ input[type="range"]::-webkit-slider-thumb {
   width: 5px;
   height: 16px;
 }
+
+/* customScrollbar.css */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.mask {
+  display: inline-block;
+  background-color: currentColor;
+}
+
+
+
+
