@@ -1,5 +1,5 @@
-import executeQuery from "@/helpers/dbcon";
 import {NextResponse} from "next/server";
+import {PrismaClient} from "@prisma/client";
 
 export async function GET(req) {
     const { searchParams } = new URL(req.url)
@@ -8,123 +8,42 @@ export async function GET(req) {
     const needLikesCount = searchParams.get('likesCount') === 'true' // нужно получить общее количество лайков под всеми треками исполнителя
     const needPlaysCount = searchParams.get('playsCount') === 'true' // нужно получить общее количество прослушиваний всех треков исполнителя
 
-    const query = `
-        SELECT *
-        FROM Users
-    `;
+    const prisma = new PrismaClient()
 
-    const result = await executeQuery({ query });
+    let query = `
+    SELECT
+        u.UserID as id,
+        u.UserName as name,
+        u.Email as email,
+        u.PasswordHash as passwordHash,
+        u.RegistrationDate as regDate,
+        u.AvatarUrl as avatarUrl,
+        u.ShortDescription as shortDesc,
+        u.Description as 'desc',
+        u.BackgroundUrl as backgroundUrl
+        ${needTracksCount ? ', CAST(COUNT(t.TrackID) AS CHAR) as totalTracks' : ''}
+        ${needLikesCount ? ', CAST(SUM(t.Likes) AS CHAR) as totalLikes' : ''}
+        ${needPlaysCount ? ', CAST(SUM(t.Plays) AS CHAR) as totalPlays' : ''}
+        ${needGenres ? ', GROUP_CONCAT(DISTINCT g.GenreName) as genres' : ''}
+    FROM
+        Users u
+    ${
+        (needGenres || needTracksCount || needLikesCount || needPlaysCount) ? `
+    LEFT JOIN
+        _TrackToUser tu ON u.UserID = tu.B
+    LEFT JOIN
+        Tracks t ON tu.A = t.TrackID` : '' 
+    }
+    ${needGenres ? 'LEFT JOIN _GenreToTrack gt ON t.TrackID = gt.B' : ''}
+    ${needGenres ? 'LEFT JOIN Genres g ON gt.A = g.GenreID' : ''}
+    GROUP BY
+        u.UserID;`;
+
+    const result = await prisma.$queryRawUnsafe(query);
 
     if (needGenres){
-        const resultGenres = await executeQuery(
-            {
-                query: `
-                SELECT
-                    u.UserID,
-                    GROUP_CONCAT(DISTINCT g.GenreName) AS Genres
-                FROM
-                    Users u
-                JOIN
-                    Tracks t ON u.UserID = t.ArtistID
-                JOIN
-                    TrackGenres tg ON t.TrackID = tg.TrackID
-                JOIN
-                    Genres g ON tg.GenreID = g.GenreID
-                GROUP BY
-                    u.UserID;`
-            })
-
-        result.forEach(user => {
-            const userId = user["UserID"];
-
-            // Поиск данных о жанрах по UserID
-            const genresInfo = resultGenres.find(genres => genres["UserID"] === userId);
-
-            // Если данные о жанрах найдены, добавляем поле "Genres" в данные пользователя
-            if (genresInfo) {
-                user["Genres"] = genresInfo["Genres"] ? genresInfo["Genres"].split(',') : [];
-            }
-            else {
-                user["Genres"] = []
-            }
-        });
-    }
-
-    if (needTracksCount){
-        const resultTrackCount = await executeQuery(
-            {
-                query :`
-                SELECT
-                    u.UserID,
-                    COUNT(t.TrackID) AS TracksCount
-                FROM
-                    Users u
-                LEFT JOIN
-                    Tracks t ON u.UserID = t.ArtistID
-                GROUP BY
-                    u.UserID;`
-            })
-
-        result.forEach(user => {
-            const userId = user["UserID"];
-
-            const trackCountInfo = resultTrackCount.find(genres => genres["UserID"] === userId);
-
-            if (trackCountInfo) {
-                user["TracksCount"] = trackCountInfo["TracksCount"];
-            }
-        });
-    }
-
-    if (needLikesCount){
-        const resultLikesCount = await executeQuery(
-            {
-                query: `
-                SELECT
-                    u.UserID,
-                    SUM(t.Likes) AS LikesCount
-                FROM
-                    Users u
-                LEFT JOIN
-                    Tracks t ON u.UserID = t.ArtistID
-                GROUP BY
-                    u.UserID;`
-            })
-
-        result.forEach(user => {
-            const userId = user["UserID"];
-
-            const likesCountInfo = resultLikesCount.find(genres => genres["UserID"] === userId);
-
-            if (likesCountInfo) {
-                user["LikesCount"] = likesCountInfo["LikesCount"] ? likesCountInfo["LikesCount"] : 0;
-            }
-        });
-    }
-
-    if (needPlaysCount){
-        const resultPlaysCount= await executeQuery(
-            {
-                query:`
-                SELECT
-                    u.UserID,
-                    SUM(t.Plays) AS PlaysCount
-                FROM
-                    Users u
-                LEFT JOIN
-                    Tracks t ON u.UserID = t.ArtistID
-                GROUP BY
-                    u.UserID;`
-            })
-
-        result.forEach(user => {
-            const userId = user["UserID"];
-
-            const playsCountInfo = resultPlaysCount.find(genres => genres["UserID"] === userId);
-
-            if (playsCountInfo) {
-                user["PlaysCount"] = playsCountInfo["PlaysCount"] ? playsCountInfo["PlaysCount"] : 0;
-            }
+        result.forEach(item => {
+            item.genres = item.genres !== null ? item.genres.split(',') : [];
         });
     }
 

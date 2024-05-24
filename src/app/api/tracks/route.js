@@ -1,30 +1,19 @@
-import executeQuery from "@/helpers/dbcon";
 import {NextResponse} from "next/server";
+import {PrismaClient} from "@prisma/client";
 
 export async function GET(req){
 
-    const result = await executeQuery(
-        {
-            query: `
-            SELECT
-                Tracks.*,
-                GROUP_CONCAT(Genres.GenreName) AS GenreList
-            FROM
-                Tracks
-            LEFT JOIN
-                TrackGenres ON Tracks.TrackID = TrackGenres.TrackID
-            LEFT JOIN
-                Genres ON TrackGenres.GenreID = Genres.GenreID
-            GROUP BY
-                Tracks.TrackID`
-        })
+    const prisma = new PrismaClient()
 
-    const tracksWithGenresArray = result.map(track => {
-        return {
-            ...track,
-            GenreList: track.GenreList ? track.GenreList.split(',') : [],
-        };
-    });
+    const tracks = await prisma.track.findMany({
+        include: {
+            genres: {
+                select: {
+                    name: true
+                }
+            }
+        }
+    })
 
-    return NextResponse.json(tracksWithGenresArray)
+    return NextResponse.json(tracks)
 }

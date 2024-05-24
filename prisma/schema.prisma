@@ -1,0 +1,77 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Album {
+  id          Int      @id @default(autoincrement()) @map("AlbumID")
+  title       String   @db.VarChar(255) @map("Title")
+  imageUrl    String   @db.VarChar(255) @map("ImageUrl")
+  isSingle    Int      @db.TinyInt @map("IsSingle")
+  releaseDate DateTime @db.Date @map("ReleaseDate")
+  tracks      Track[]
+  users       User[]
+
+  @@map("Albums")
+}
+
+model Comment {
+  id        Int       @id @default(autoincrement()) @map("CommentID")
+  trackId   Int?      @map("TrackID")
+  userId    Int?      @map("UserId")
+  text      String?   @db.Text @map("Text ")
+  date      DateTime? @default(now()) @db.Timestamp(0) @map("Date")
+  track     Track?   @relation(fields: [trackId], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "comments_ibfk_1")
+
+  @@index([trackId], map: "TrackID")
+  @@index([userId], map: "UserID")
+
+  @@map("Comments")
+}
+
+model Genre {
+  id        Int      @id @default(autoincrement()) @map("GenreID")
+  name      String   @db.VarChar(255) @map("GenreName")
+  tracks    Track[]
+
+  @@map("Genres")
+}
+
+model Track {
+  id                Int        @id @default(autoincrement()) @map("TrackID")
+  title             String     @db.VarChar(255) @map("Title")
+  albumId           Int        @map("AlbumID")
+  duration          Int        @map("DurationInSeconds")
+  audioUrl          String     @db.VarChar(255) @map("AudioUrl")
+  likes             Int        @map("Likes")
+  shares            Int        @map("Shares")
+  plays             Int        @map("Plays")
+  isExplicit        Boolean    @default(false) @map("IsExplicit")
+  comments          Comment[]
+  album             Album     @relation(fields: [albumId], references: [id], onUpdate: Restrict, map: "tracks_ibfk_1")
+  genres            Genre[]
+  users             User[]
+
+  @@index([albumId], map: "AlbumID")
+  @@map("Tracks")
+}
+
+model User {
+  id               Int      @id @default(autoincrement()) @map("UserID")
+  name             String   @db.VarChar(255) @map("Username")
+  email            String   @unique(map: "Email") @db.VarChar(255) @map("Email")
+  passwordHash     String   @db.VarChar(255) @map("PasswordHash")
+  regDate          DateTime @default(now()) @db.Timestamp(0) @map("RegistrationDate")
+  avatarUrl        String?  @default("/defaults/avatar.jpg") @db.VarChar(255) @map("AvatarUrl")
+  shortDesc        String?  @db.VarChar(100) @map("ShortDescription")
+  desc             String?  @db.Text @map("Description")
+  backgroundUrl    String?  @default("/defaults/background.jpg") @db.VarChar(255) @map("BackgroundUrl")
+  albums           Album[]
+  tracks           Track[]
+
+  @@map("Users")
+}
