@@ -7,6 +7,7 @@ import HomeComponent from "@/components/homeComponent";
 import PlaylistCard from "@/components/playlistCard";
 import ArtistCard from "@/components/artistCard";
 import SongItem from "@/components/songItem";
+import {serverFetch} from "@/utils/server/auth";
 
 const items = [
   'Card 1',
@@ -44,12 +45,21 @@ const songs = [
   { artist: 'the neighbourhood', title: '"Sweater Weather"', listenCount: '32.4M' },
 ];
 
+const fetchAlbums = async () =>{
+  const response = await serverFetch('http://localhost:5135/api/v1/albums?includes=Tracks&orderBy=releaseDateDesc')
+  console.log(response);
 
-const LeftSide = () => {
+  return response.slice(0, 8);
+}
+
+
+const LeftSide = async () => {
+  const albums = await fetchAlbums();
+
   return (
-      <div className='px-6 border-r border-[#f2f2f2]'>
+      <div className=''>
         <HomeComponent title='Популярная музыка на GWalt'>
-          <Carousel gap={32}>
+          <Carousel gap={32} itemsPerSlide={5}>
             {
               items.map((item, index) => (
                   <PlaylistCard/>
@@ -63,7 +73,7 @@ const LeftSide = () => {
         </HomeComponent>
 
         <HomeComponent title='Популярные актёры'>
-          <Carousel gap={32}>
+          <Carousel gap={32} itemsPerSlide={5}>
             {
               items.map((item, index) => (
                   <ArtistCard/>
@@ -73,7 +83,7 @@ const LeftSide = () => {
         </HomeComponent>
 
         <HomeComponent title='Идеально для вечеринки'>
-          <Carousel gap={32}>
+          <Carousel gap={32} itemsPerSlide={5}>
             {
               items.map((item, index) => (
                   <PlaylistCard/>
@@ -82,14 +92,11 @@ const LeftSide = () => {
           </Carousel>
         </HomeComponent>
 
-        <HomeComponent title='Так учиться легче'>
-          <Carousel gap={32}>
+        <HomeComponent title='Недавние релизы'>
+          <Carousel gap={32} itemsPerSlide={5}>
             {
-              items.map((item, index) => (
-                  <>
-                    <PlaylistCard/>
-                    <ArtistCard/>
-                  </>
+              albums.map((item, index) => (
+                  <PlaylistCard coverUrl={item.coverUrl} title={item.title} />
               ))
             }
           </Carousel>
