@@ -2,7 +2,6 @@
 
 import React, {useState} from 'react';
 import Modal from 'react-modal';
-import {sha256} from "js-sha256";
 
 const RegModal = () => {
     const [login, setLogin] = useState('');
@@ -25,36 +24,29 @@ const RegModal = () => {
         },
     };
 
-    async function getData(){
-        const response = await fetch('/api/users');
-
-        return response.json();
-    }
-
     async function submitLogin(){
-        const users = await getData();
+        //TODO: Проверка свободна ли почта
 
-        if (!users.find(item => item.Email === email)){
-            const newUser = {UserName: login, Email: email, PasswordHash: sha256(password)}
-            const res = await fetch('/api/users',{
-                method: 'POST',
-                body: JSON.stringify(newUser),
-                headers: {
-                    'content-type': 'application/json'
-                }
-            })
-            console.log('Auth completed')
+        const newUser = {
+            Name: login,
+            Email: email,
+            Password: password
         }
-        else {
-            setError('Пользователь с такой почтой уже зарегистрирован')
-        }
+
+        const res = await fetch('http://localhost:5135/api/v1/users',{
+            method: 'POST',
+            body: JSON.stringify(newUser),
+            headers: {
+                'content-type': 'application/json'
+            }
+        })
+
+        console.log(res);
     }
 
     function isValidEmail(email) {
-        // Регулярное выражение для проверки формата электронной почты
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-        // Проверка соответствия строки формату электронной почты
         return emailRegex.test(email);
     }
 
@@ -62,12 +54,13 @@ const RegModal = () => {
         setEmail('')
         setLogin('')
         setPassword('')
+
         setShowModal(false)
     }
 
     return (
         <>
-            <button className='bg-[#9388D8] text-white px-2 py-[1px] rounded h-[28px] hover:bg-[#8476DD] ease-in duration-100' onClick={() => setShowModal(true)}>Создать аккаунт</button>
+            <button className='bg-accentPurple text-white px-2 py-[1px] rounded h-[28px] hover:bg-accentPurpleActive ease-in duration-100' onClick={() => setShowModal(true)}>Создать аккаунт</button>
             <Modal isOpen={showModal} style={customStyles}>
                 <div className='flex flex-col gap-3 justify-between h-full'>
                     <h2 className='text-center text-2xl font-medium border-b pb-5'>Регистрация</h2>

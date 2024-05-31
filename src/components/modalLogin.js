@@ -3,20 +3,17 @@
 import React, {useEffect, useState} from 'react';
 import Modal from 'react-modal';
 import {sha256} from "js-sha256";
-import {useAuth} from "@/components/authProvider";
+import {useAuth} from "@/hoc/authContext";
 
 const ModalLogin = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
     const [loginSuccess, setLoginSuccess] = useState(false);
     const [error, setError] = useState('');
     const [showModal, setShowModal] = useState(false);
 
-    const { performLogin } = useAuth()
-
-    useEffect(() => {
-        setLoginSuccess(localStorage.getItem('isAuth') ? localStorage.getItem('isAuth') > 0 : false)
-    }, []);
+    const { setIsAuthenticated, setUserId } = useAuth()
 
     const customStyles = {
         content: {
@@ -31,30 +28,26 @@ const ModalLogin = () => {
         },
     };
 
-    async function getData(){
-        const response = await fetch('/api/users');
-
-        return response.json();
-    }
-
     async function submitLogin(){
-        const users = await getData();
-        const foundUser = users.find(item => item.Email === email && item.PasswordHash === sha256(password));
+        const response = await fetch('api/auth/login',{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ Email: email, Password: password} )
+        })
 
-        if (foundUser){
-            performLogin(foundUser.UserID)
-            setLoginSuccess(true);
-        }
-        else{
-            setError('Неверная почта или пароль')
+        if (response.ok){
+            const data = await response.json();
+
+            setIsAuthenticated(true);
+            setUserId(data.userId);
         }
     }
 
     function isValidEmail(email) {
-        // Регулярное выражение для проверки формата электронной почты
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-        // Проверка соответствия строки формату электронной почты
         return emailRegex.test(email);
     }
 
