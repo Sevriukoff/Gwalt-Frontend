@@ -15,9 +15,13 @@ module.exports = {
     },
     extend: {
       colors: {
+        accentPurple: '#725FEB',
+        accentPurpleActive: '#5c49d2',
+        textDefault: '#333'
 
       },
       backgroundImage: {
+        'gradient-custom': 'linear-gradient(135deg,#846170,#70929c)',
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
