@@ -14,6 +14,10 @@ module.exports = {
       xs: {max: '479.99px'}
     },
     extend: {
+      transitionProperty:{
+        height: 'height'
+      },
+
       colors: {
         accentPurple: '#725FEB',
         accentPurpleActive: '#5c49d2',
