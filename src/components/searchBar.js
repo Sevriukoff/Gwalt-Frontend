@@ -32,14 +32,14 @@ const SearchBar = () => {
 
     const fetchData = (value) => {
         Promise.all([
-            fetch(`/api/tracks`).then((response) => response.json()),
-            fetch(`/api/users`).then((response) => response.json())
+            fetch(`http://localhost:5135/api/v1/tracks`).then((response) => response.json()),
+            fetch(`http://localhost:5135/api/v1/users`).then((response) => response.json())
         ]).then(([tracks, users]) => {
             const resultsTracks = tracks.filter((track) =>
-                track && track.Title && track.Title.toLowerCase().includes(value)
+                track && track.title && track.title.toLowerCase().includes(value)
             );
             const resultsUsers = users.filter((user) =>
-                user && user.Username && user.Username.toLowerCase().includes(value)
+                user && user.name && user.name.toLowerCase().includes(value)
             );
 
             setResult({
