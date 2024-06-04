@@ -2,6 +2,7 @@ import React from 'react';
 import Image from "next/image";
 import {PlayButton} from "@/components/playButton";
 import {getGradientStyles} from "@/utils/server/color";
+import RangeSlider from "@/components/slider/rangeSlider";
 
 
 const album = {
