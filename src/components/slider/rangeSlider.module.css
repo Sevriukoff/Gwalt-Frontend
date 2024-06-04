@@ -1,0 +1,12 @@
+.rangeSliderVertical {
+    width: 3px;
+    height: 100%;
+    writing-mode: vertical-lr;
+    direction: rtl;
+    appearance: slider-vertical;
+}
+
+.rangeSliderHorizontal {
+    width: 100%;
+    height: 3px;
+}
