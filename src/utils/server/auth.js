@@ -14,6 +14,7 @@ function getTokens() {
 
   return { accessToken, refreshToken };
 }
+
 function verifyToken(token) {
   try {
     const decoded = jwt.verify(token, SECRET_KEY);
@@ -63,19 +64,19 @@ export function getAuthUserId() {
 }
 
 export async function fetchUserData() {
-  const {accessToken, refreshToken} = getTokens();
+  const { accessToken, refreshToken } = getTokens();
   const userId = getAuthUserId();
 
   if (!userId)
-    return { }
+    return {};
 
-  const response = await fetch(`http://localhost:5135/api/v1/users/${userId}`, {
+  const response = await fetch(`http://localhost:5135/api/v1/users/${ userId }`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${accessToken}`,
-      'Cookie': `${ACCESS_TOKEN_COOKIE_NAME}=${accessToken}; ${REFRESH_TOKEN_COOKIE_NAME}=${refreshToken}}}`
-    }
+      'Authorization': `Bearer ${ accessToken }`,
+      'Cookie': `${ ACCESS_TOKEN_COOKIE_NAME }=${ accessToken }; ${ REFRESH_TOKEN_COOKIE_NAME }=${ refreshToken }}}`,
+    },
   });
 
   if (!response.ok) {
@@ -93,18 +94,19 @@ export async function serverFetch(url, options = {}) {
   const fetchHeaders = {
     ...headers,
     'Content-Type': 'application/json',
-    'Authorization': `Bearer ${accessToken}`,
-    'Cookie': `${ACCESS_TOKEN_COOKIE_NAME}=${accessToken}; ${REFRESH_TOKEN_COOKIE_NAME}=${refreshToken};`
+    'Authorization': `Bearer ${ accessToken }`,
+    'Cookie': `${ ACCESS_TOKEN_COOKIE_NAME }=${ accessToken }; ${ REFRESH_TOKEN_COOKIE_NAME }=${ refreshToken };`,
   };
 
   const response = await fetch(url, {
     method,
     headers: fetchHeaders,
-    body: body ? JSON.stringify(body) : null
+    body: body ? JSON.stringify(body) : null,
   });
 
   if (!response.ok) {
-    throw new Error('Failed to fetch data');
+    //throw new Error('Failed to fetch data');
+    return null;
   }
 
   return await response.json();
