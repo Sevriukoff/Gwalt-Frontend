@@ -6,10 +6,12 @@ import RegModal from "@/components/regModal";
 import Link from "next/link";
 import Image from "next/image";
 import {useAuth} from "@/hoc/authContext";
+import useModal from "@/hooks/useModal";
 
 const ClientHeader = () => {
   const { isAuthenticated, userId } = useAuth();
   const [avatarUrl, setAvatarUrl] = useState('');
+  const authModal = useModal('AuthModal');
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -21,7 +23,10 @@ const ClientHeader = () => {
       setAvatarUrl(user.avatarUrl)
     }
 
-    fetchUser()
+    if (userId){
+      fetchUser()
+    }
+
   }, [userId]);
 
   return (
@@ -38,8 +43,8 @@ const ClientHeader = () => {
             </>
         ) : (
             <>
-              <ModalLogin />
-              <RegModal />
+              <button className='border-[1px] border-[#666] rounded h-[28px] px-2 py-[1px] text-white hover:border-gray-300 ease-in duration-100' onClick={authModal.open}>Войти</button>
+              <button className='bg-accentPurple text-white px-2 py-[1px] rounded h-[28px] hover:bg-accentPurpleActive ease-in duration-100' onClick={authModal.open}>Создать аккаунт</button>
             </>
         )}
       </div>

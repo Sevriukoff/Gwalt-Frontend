@@ -5,7 +5,7 @@ import ClientHeader from "@/components/clientHeader";
 const Header = async () => {
     return (
         <header className="bg-[#333] border-b-2 border-b-[#ccc] font-light text-sm">
-            <div className="max-w-[1140px] mx-auto my-0">
+            <div className="max-w-[1387px] mx-auto my-0">
                 <nav className="grid grid-cols-[auto_1.2fr_1fr] gap-3">
                     <div className="flex">
                         <div className="bg-black flex items-center px-2">
