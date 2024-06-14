@@ -1,37 +1,10 @@
 import React from 'react';
-import Carousel from "@/components/Carousel";
-import Album from "@/components/album";
-import Image from "next/image";
-import SongList from "@/components/songList";
-import HomeComponent from "@/components/homeComponent";
-import PlaylistCard from "@/components/playlistCard";
-import ArtistCard from "@/components/artistCard";
-import SongItem from "@/components/songItem";
-import {serverFetch} from "@/utils/server/auth";
-
-const items = [
-  'Card 1',
-  'Card 2',
-  'Card 3',
-  'Card 4',
-  'Card 5',
-  'Card 6',
-  'Card 7',
-  'Card 8',
-  'Card 9',
-  'Card 10',
-  'Card 11',
-  'Card 12',
-  'Card 13',
-  'Card 14',
-  'Card 15',
-  'Card 16',
-  'Card 17',
-  'Card 18',
-  'Card 19',
-  'Card 20',
-  'Card 21',
-];
+import Carousel from '@/components/Carousel';
+import SongList from '@/components/songList';
+import HomeComponent from '@/components/homeComponent';
+import PlaylistCard from '@/components/playlistCard';
+import ArtistCard from '@/components/artistCard';
+import fetchRest from '@/utils/common/fetchRest';
 
 const songs = [
   { artist: 'Billie Eilish', title: 'No Time To Die', listenCount: '7.81M' },
@@ -45,66 +18,121 @@ const songs = [
   { artist: 'the neighbourhood', title: '"Sweater Weather"', listenCount: '32.4M' },
 ];
 
-const fetchAlbums = async () =>{
-  const response = await serverFetch('http://localhost:5135/api/v1/albums?includes=Tracks&orderBy=releaseDateDesc')
-  console.log(response);
+const fetchNewAlbums = async () => {
+  const response = await fetchRest('/v1/albums?includes=Genre&orderBy=releaseDateDesc&pageNumber=1&pageSize=10');
+  const data = await response.json();
 
-  return response.slice(0, 8);
-}
+  return data;
+};
+
+const fetchPopularAlbums = async () => {
+  const response = await fetchRest('/v1/albums?includes=Genre&orderBy=ListensCountDesc&pageNumber=1&pageSize=10');
+  const data = await response.json();
+
+  return data;
+};
+
+const fetchPopularArtists = async () => {
+  const response = await fetchRest('/v1/users?withStats=true&orderBy=FollowersCountDesc&pageNumber=1&pageSize=10');
+  const data = await response.json();
+
+  return data;
+};
+
+const fetchAlbumByGenre = async (genres = []) => {
+  const genreStr = genres.join(';');
+  const response = await fetchRest(`/v1/albums?includes=Genre&genres=${ genreStr }&orderBy=releaseDateDesc&pageNumber=1&pageSize=10`);
+  const data = await response.json();
+
+  return data;
+};
 
 
 const LeftSide = async () => {
-  const albums = await fetchAlbums();
+  const newAlbums = await fetchNewAlbums();
+  const popularAlbums = await fetchPopularAlbums();
+  const popularUsers = await fetchPopularArtists();
+  const postPunkAlbums = await fetchAlbumByGenre(['post-punk']);
+  const partyAlbums = await fetchAlbumByGenre(['hip-hop %26 rap', 'pop']);
 
   return (
-      <div className=''>
-        <HomeComponent title='Популярная музыка на GWalt'>
-          <Carousel gap={32} itemsPerSlide={5}>
-            {
-              items.map((item, index) => (
-                  <PlaylistCard/>
-              ))
-            }
-          </Carousel>
-        </HomeComponent>
+    <div className=''>
+      <HomeComponent title='Популярная музыка на GWalt'>
+        <Carousel gap={ 32 } itemsPerSlide={ 5 }>
+          {
+            popularAlbums.map((album) => (
+              <PlaylistCard key={ album.id }
+                            coverUrl={ album.coverUrl }
+                            title={ album.title }
+                            genre={ album.genre }
+              />
+            ))
+          }
+        </Carousel>
+      </HomeComponent>
 
-        <HomeComponent title='Плейлист дня'>
-          <SongList songs={songs} />
-        </HomeComponent>
+      <HomeComponent title='Плейлист дня'>
+        <SongList songs={ songs } />
+      </HomeComponent>
 
-        <HomeComponent title='Популярные актёры'>
-          <Carousel gap={32} itemsPerSlide={5}>
-            {
-              items.map((item, index) => (
-                  <ArtistCard/>
-              ))
-            }
-          </Carousel>
-        </HomeComponent>
+      <HomeComponent title='Недавние релизы'>
+        <Carousel gap={ 32 } itemsPerSlide={ 5 }>
+          {
+            newAlbums.map((album) => (
+              <PlaylistCard key={ album.id }
+                            coverUrl={ album.coverUrl }
+                            title={ album.title }
+                            genre={ album.genre }
+              />
+            ))
+          }
+        </Carousel>
+      </HomeComponent>
 
-        <HomeComponent title='Идеально для вечеринки'>
-          <Carousel gap={32} itemsPerSlide={5}>
-            {
-              items.map((item, index) => (
-                  <PlaylistCard/>
-              ))
-            }
-          </Carousel>
-        </HomeComponent>
+      <HomeComponent title='Популярные исполнители'>
+        <Carousel gap={ 32 } itemsPerSlide={ 5 }>
+          {
+            popularUsers.map((user) => (
+              <ArtistCard key={ user.id }
+                          id={ user.id }
+                          avatarUrl={ user.avatarUrl }
+                          name={ user.name }
+                          followerCount={ user.followersCount }
+              />
+            ))
+          }
+        </Carousel>
+      </HomeComponent>
 
-        <HomeComponent title='Недавние релизы'>
-          <Carousel gap={32} itemsPerSlide={5}>
-            {
-              albums.map((item, index) => (
-                  <PlaylistCard coverUrl={item.coverUrl} title={item.title} />
-              ))
-            }
-          </Carousel>
-        </HomeComponent>
+      <HomeComponent title='Идеально для вечеринки'>
+        <Carousel gap={ 32 } itemsPerSlide={ 5 }>
+          {
+            partyAlbums.map((album) => (
+              <PlaylistCard key={ album.id }
+                            coverUrl={ album.coverUrl }
+                            title={ album.title }
+                            genre={ album.genre }
+              />
+            ))
+          }
+        </Carousel>
+      </HomeComponent>
 
-        <Album/>
+      <HomeComponent title='Треки для самых грустных'>
+        <Carousel gap={ 32 } itemsPerSlide={ 5 }>
+          {
+            postPunkAlbums.map((album) => (
+              <PlaylistCard key={ album.id }
+                            coverUrl={ album.coverUrl }
+                            title={ album.title }
+                            genre={ album.genre }
+              />
+            ))
+          }
+        </Carousel>
+      </HomeComponent>
 
-      </div>
+    </div>
   );
 };
 
