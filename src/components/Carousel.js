@@ -1,7 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
-import Image from "next/image";
+import React, { useEffect, useRef, useState } from 'react';
 
 const Carousel = ({ children, itemsPerSlide = 4, gap = 16 }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -54,40 +53,40 @@ const Carousel = ({ children, itemsPerSlide = 4, gap = 16 }) => {
   const arrowClass = 'absolute transform bg-white border border-gray-300 rounded text-gray-300 hover:font-medium px-2 py-1 z-10 hover:border-[#9694FF] hover:text-[#9694FF]';
 
   return (
-      <div className="relative w-full max-w-full" ref={carouselRef}>
-        {currentSlide > 0 && (
-            <button
-                className={`-left-3 -translate-y-1/2 ${arrowClass}`}
-                style={{top: `${cardWidth / 2}px`}}
-                onClick={prevSlide}
-            >
-              &lt;
-            </button>
-        )}
-        <div
-            className="flex gap-9 transition-transform duration-1000 ease-in-out"
-            style={{ transform: `translateX(-${calculateTranslateX()}px)`, gap: `${gap}px` }}
+    <div className='relative w-full max-w-full' ref={ carouselRef }>
+      { currentSlide > 0 && (
+        <button
+          className={ `-left-3 -translate-y-1/2 ${ arrowClass }` }
+          style={ { top: `${ cardWidth / 2 }px` } }
+          onClick={ prevSlide }
         >
-          {React.Children.map(children, (child, index) => (
-              <div
-                  key={index}
-                  className="flex-shrink-0"
-                  style={{ maxWidth: `${cardWidth}px`, minWidth: `${cardWidth}px` }}
-              >
-                {child}
-              </div>
-          ))}
-        </div>
-        {currentSlide < Math.ceil(totalItems / itemsPerSlide) - 1 && (
-            <button
-                className={`-right-3 -translate-y-1/2 ${arrowClass}`}
-                style={{top: `${cardWidth / 2}px`}}
-                onClick={nextSlide}
-            >
-              &gt;
-            </button>
-        )}
+          &lt;
+        </button>
+      ) }
+      <div
+        className='flex gap-9 transition-transform duration-1000 ease-in-out'
+        style={ { transform: `translateX(-${ calculateTranslateX() }px)`, gap: `${ gap }px` } }
+      >
+        { React.Children.map(children, (child, index) => (
+          <div
+            key={ index }
+            className='flex-shrink-0'
+            style={ { maxWidth: `${ cardWidth }px`, minWidth: `${ cardWidth }px` } }
+          >
+            { child }
+          </div>
+        )) }
       </div>
+      { currentSlide < Math.ceil(totalItems / itemsPerSlide) - 1 && (
+        <button
+          className={ `-right-3 -translate-y-1/2 ${ arrowClass }` }
+          style={ { top: `${ cardWidth / 2 }px` } }
+          onClick={ nextSlide }
+        >
+          &gt;
+        </button>
+      ) }
+    </div>
   );
 };
 
