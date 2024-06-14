@@ -1,8 +1,8 @@
-import { cookies } from "next/headers";
-import {NextResponse} from "next/server";
-import {getAuthUserId} from "@/utils/server/auth";
+import { cookies } from 'next/headers';
+import { NextResponse } from 'next/server';
+import { getAuthUserId } from '@/utils/server/auth';
 
-export async function POST(req, res){
+export async function POST(req, res) {
 
   const body = await req.json();
   const response = await fetch('http://localhost:5135/api/v1/auth/login', {
@@ -10,8 +10,11 @@ export async function POST(req, res){
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(body)
+    body: JSON.stringify(body),
   });
+
+  if (!response.ok)
+    return NextResponse.error();
 
   const { accessToken, refreshToken } = await response.json();
 
@@ -27,7 +30,7 @@ export async function POST(req, res){
     path: '/',
   });
 
-  cookieStore.set( {
+  cookieStore.set({
     name: 'refresh-token',
     value: refreshToken,
     httpOnly: true,
