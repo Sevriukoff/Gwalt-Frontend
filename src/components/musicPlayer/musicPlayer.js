@@ -1,8 +1,8 @@
-'use client'
+'use client';
 
-import React, {useEffect, useState} from 'react';
-import useMusicPlayer from "@/hooks/useMusicPlayer";
-import MusicPlayerContent from "@/components/musicPlayerContent";
+import React, { useEffect, useState } from 'react';
+import useMusicPlayer from '@/hooks/useMusicPlayer';
+import MusicPlayerContent from '@/components/musicPlayer/musicPlayerContent';
 
 const MusicPlayer = () => {
   const musicPlayer = useMusicPlayer();
@@ -14,16 +14,16 @@ const MusicPlayer = () => {
       return;
 
     const fetchTrack = async () => {
-      const response = await fetch(`http://localhost:5135/api/v1/tracks/${musicPlayer.activeId}?includes=Album.Authors`,
-          { cache: 'force-cache' })
+      const response = await fetch(`http://localhost:5135/api/v1/tracks/${ musicPlayer.activeId }?includes=Album.Authors`,
+        { cache: 'force-cache' });
       const track = await response.json();
       setTrack(track);
-    }
+    };
 
-    fetchTrack()
+    fetchTrack();
   }, [musicPlayer.activeId]);
 
-  if (!track || !trackUrl || !musicPlayer.activeId){
+  if (!track || !trackUrl || !musicPlayer.activeId) {
     return null;
   }
 
@@ -38,7 +38,7 @@ const MusicPlayer = () => {
       return musicPlayer.setId(musicPlayer.ids[0]); //TODO Repeat logic
 
     musicPlayer.setId(nextTrack);
-  }
+  };
 
   const handlePrevious = () => {
     if (musicPlayer.ids.length === 0)
@@ -48,24 +48,24 @@ const MusicPlayer = () => {
     const previousTrack = musicPlayer.ids[currentIndex - 1];
 
     if (!previousTrack)
-      return musicPlayer.setId(musicPlayer.ids[musicPlayer.ids.length - 1])
+      return musicPlayer.setId(musicPlayer.ids[musicPlayer.ids.length - 1]);
 
     musicPlayer.setId(previousTrack);
-  }
+  };
 
   const handleEnded = () => {
-    handleNext()
-  }
+    handleNext();
+  };
 
   return (
-      <div className='fixed bottom-0 left-0 bg-[#F2F2F2] border-t border-r-gray-400 w-full h-[50px] py-2 px-4'>
-         <MusicPlayerContent track={track}
-                             trackUrl={trackUrl}
-                             onNext={handleNext}
-                             onPrevious={handlePrevious}
-                             onEnded={handleEnded}
-         />
-      </div>
+    <div className='fixed z-30 bottom-0 left-0 bg-[#F2F2F2] border-t border-r-gray-400 w-full h-[50px] py-2 px-4'>
+      <MusicPlayerContent track={ track }
+                          trackUrl={ trackUrl }
+                          onNext={ handleNext }
+                          onPrevious={ handlePrevious }
+                          onEnded={ handleEnded }
+      />
+    </div>
   );
 };
 
