@@ -3,8 +3,8 @@
 import React from 'react';
 import IconBtn from '@/components/iconBtn';
 import WaveForm from '@/components/waveForm';
-import Image from 'next/image';
 import ActionButton from '@/components/actionButton';
+import CoverImage from '@/components/coverImage';
 
 const Track = ({
                  id = 0,
@@ -34,9 +34,7 @@ const Track = ({
 
   return (
     <div className='flex gap-4 text-[#333] group'>
-      <div className='relative min-w-[160px] min-h-[160px]'>
-        <Image src={ imgUrl } alt='track' layout='fill' className='object-cover rounded' />
-      </div>
+      <CoverImage coverUrl={ imgUrl } clasName='min-w-[160px] min-h-[160px] text-transparent' />
       <div className='flex 0 flex-col justify-between w-full pt-2'>
         <div className='flex w-full'>
           <div className='flex items-center justify-center rounded-full bg-[#9388D8] w-[36px] h-[36px]'>
