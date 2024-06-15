@@ -1,3 +1,5 @@
+import fetchRest from '@/utils/common/fetchRest';
+
 let activeListeningTime = 0;
 let maxListeningTime = 0;
 let lastPlayTime = 0;
@@ -55,7 +57,7 @@ export const sendListeningData = (trackId, volume, duration, currentTime) => {
     volume: volume,
   };
 
-  fetch('/api/listens', {
+  fetchRest('/v1/listens', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

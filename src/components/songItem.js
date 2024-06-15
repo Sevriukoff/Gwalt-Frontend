@@ -3,9 +3,10 @@ import MaskedIcon from '@/components/maskedIcon';
 import Image from 'next/image';
 
 const SongItem = ({ song }) => {
+  console.log(song);
   return (
     <div className='flex gap-3'>
-      <Image className='py-1 max-h-[50px] box-content' src='/b.png' alt='cover' height={ 50 } width={ 50 } />
+      <Image className='py-1 max-h-[50px] box-content' src={ song.coverUrl } alt='cover' height={ 50 } width={ 50 } />
 
       <div className='mt-1'>
         <p className='text-sm text-[#999] leading-none'>{ song.artist }</p>

@@ -2,7 +2,7 @@ import React from 'react';
 import Carousel from '@/components/Carousel';
 import SongList from '@/components/songList';
 import HomeComponent from '@/components/homeComponent';
-import PlaylistCard from '@/components/playlistCard';
+import AlbumCard from '@/components/albumCard';
 import ArtistCard from '@/components/artistCard';
 import fetchRest from '@/utils/common/fetchRest';
 
@@ -61,10 +61,11 @@ const LeftSide = async () => {
         <Carousel gap={ 32 } itemsPerSlide={ 5 }>
           {
             popularAlbums.map((album) => (
-              <PlaylistCard key={ album.id }
-                            coverUrl={ album.coverUrl }
-                            title={ album.title }
-                            genre={ album.genre }
+              <AlbumCard key={ album.id }
+                         albumId={ album.id }
+                         coverUrl={ album.coverUrl }
+                         title={ album.title }
+                         genre={ album.genre }
               />
             ))
           }
@@ -79,10 +80,11 @@ const LeftSide = async () => {
         <Carousel gap={ 32 } itemsPerSlide={ 5 }>
           {
             newAlbums.map((album) => (
-              <PlaylistCard key={ album.id }
-                            coverUrl={ album.coverUrl }
-                            title={ album.title }
-                            genre={ album.genre }
+              <AlbumCard key={ album.id }
+                         albumId={ album.id }
+                         coverUrl={ album.coverUrl }
+                         title={ album.title }
+                         genre={ album.genre }
               />
             ))
           }
@@ -108,10 +110,11 @@ const LeftSide = async () => {
         <Carousel gap={ 32 } itemsPerSlide={ 5 }>
           {
             partyAlbums.map((album) => (
-              <PlaylistCard key={ album.id }
-                            coverUrl={ album.coverUrl }
-                            title={ album.title }
-                            genre={ album.genre }
+              <AlbumCard key={ album.id }
+                         albumId={ album.id }
+                         coverUrl={ album.coverUrl }
+                         title={ album.title }
+                         genre={ album.genre }
               />
             ))
           }
@@ -122,10 +125,11 @@ const LeftSide = async () => {
         <Carousel gap={ 32 } itemsPerSlide={ 5 }>
           {
             postPunkAlbums.map((album) => (
-              <PlaylistCard key={ album.id }
-                            coverUrl={ album.coverUrl }
-                            title={ album.title }
-                            genre={ album.genre }
+              <AlbumCard key={ album.id }
+                         albumId={ album.id }
+                         coverUrl={ album.coverUrl }
+                         title={ album.title }
+                         genre={ album.genre }
               />
             ))
           }
