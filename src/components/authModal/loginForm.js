@@ -3,18 +3,23 @@ import { useForm } from 'react-hook-form';
 import ActionButton from '@/components/actionButton';
 import Input from '@/components/input';
 
-const LoginForm = ({ email, onSubmit }) => {
+const LoginForm = ({ email, onSubmit, next }) => {
   const { register, handleSubmit, formState: { errors, isValid, isSubmitting } } = useForm();
 
+  const handleFormSubmit = async (data) => {
+    await onSubmit(data, next);
+  };
+
   return (
-    <form onSubmit={ handleSubmit(onSubmit) } className='space-y-4'>
+    <form onSubmit={ handleSubmit(handleFormSubmit) } className='space-y-4'>
       <div>
         <Input
           id='email'
           type='email'
           value={ email }
           readOnly
-          className='mt-1 block w-full rounded-md shadow-sm border-gray-300'
+          disabled={ true }
+          className='mt-1 text-gray-500 bg-gray-200/50 block w-full rounded-md shadow-sm border-gray-300'
         />
       </div>
       <div>
@@ -36,7 +41,7 @@ const LoginForm = ({ email, onSubmit }) => {
         { errors.password && <span className='text-red-500 text-sm'>{ errors.password.message }</span> }
       </div>
       <ActionButton className='w-full h-[36px]' isOutline={ true } isLoading={ isSubmitting }
-                    disabled={ !isValid || isSubmitting }>Войти</ActionButton>
+                    disabled={ !isValid || isSubmitting }>Дальше</ActionButton>
     </form>
   );
 };
