@@ -1,4 +1,5 @@
 import './globals.css';
+import './react-select.scss';
 import { Inter, Roboto } from 'next/font/google';
 import React from 'react';
 import Header from '@/components/header';

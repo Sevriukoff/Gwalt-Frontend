@@ -1,0 +1,88 @@
+@keyframes scaleIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  50% {
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.react-select {
+  &__control {
+    background-color: transparent !important;
+    border-radius: 0.375rem !important;
+    //padding-left: 10px;
+
+    &--is-focused {
+      border-color: transparent !important;
+      box-shadow: 0 0 0 1px #725FEB !important;
+    }
+  }
+
+  &__menu {
+    animation: scaleIn 0.35s ease-in-out;
+  }
+
+  &__option {
+    cursor: pointer !important;
+
+    &--is-focused {
+      background-color: lighten(#725FEB, 30%) !important;
+      color: black !important;
+    }
+
+    &--is-selected {
+      background-color: lighten(#725FEB, 5%) !important;
+      color: white !important;
+    }
+  }
+
+  &__value-container {
+    padding: 4px 12px !important;
+    cursor: text !important;
+  }
+
+  &__input-container {
+    color: #999aa5 !important;
+  }
+
+  &__indicator-separator {
+    display: none !important;
+  }
+
+  &__indicators {
+    cursor: pointer !important;
+  }
+
+  &__indicator {
+    color: #999aa5 !important;
+
+    &:hover {
+      color: #725FEB !important;
+    }
+  }
+
+  &__multi-value {
+    background-color: rgba(#999aa5, 0.6) !important;
+    border-radius: 0.5rem !important;
+  }
+
+  &__multi-value__label {
+    font-size: 80% !important;
+    color: rgba(white, 0.7) !important;
+  }
+
+  &__multi-value__remove {
+    color: rgba(white, 0.8) !important;
+
+    &:hover {
+      background-color: transparent !important;
+      color: white !important;
+    }
+  }
+}
