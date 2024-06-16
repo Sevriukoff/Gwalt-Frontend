@@ -27,7 +27,7 @@ const Wizard = ({ children }) => {
   };
 
   return (
-    <div>
+    <>
       { React.Children.map(children, (child, index) => {
         if (child.type === Wizard.Back) {
           return React.cloneElement(child, { ...backProps });
@@ -37,15 +37,19 @@ const Wizard = ({ children }) => {
         }
         return null;
       }) }
+    </>
+  );
+};
+
+Wizard.Step = ({ className, children, next }) => {
+  return (
+    <div className={ className }>
+      { React.cloneElement(children, { ...children.props, next }) }
     </div>
   );
 };
 
-Wizard.Step = ({ children, next }) => {
-  return React.cloneElement(children, { ...children.props, next });
-};
-
-Wizard.Back = ({ children, previous, currentStep }) => {
+Wizard.Back = ({ className, children, previous, currentStep }) => {
   if (currentStep === 0) {
     return null;
   }

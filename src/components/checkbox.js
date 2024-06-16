@@ -2,7 +2,7 @@ import React, { forwardRef } from 'react';
 
 const Checkbox = forwardRef(({ checked = true, onChange, label }, ref) => {
   return (
-    <label className='inline-flex items-center space-x-2 cursor-pointer'>
+    <label className='inline-flex items-center cursor-pointer'>
       <input
         type='checkbox'
         checked={ checked }
@@ -18,9 +18,9 @@ const Checkbox = forwardRef(({ checked = true, onChange, label }, ref) => {
             onChange({ target: { checked: !checked } });
           }
         } }
-        className={ `relative inline-block w-5 h-5 border-2 rounded ${
-          checked ? 'bg-blue-600 border-blue-600' : 'border-gray-300'
-        } focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500` }
+        className={ `relative inline-block w-5 h-5 border-[1.5px] rounded ${
+          checked ? 'bg-accentPurple border-accentPurple' : 'border-gray-300'
+        } focus:outline-none focus:ring-2 focus:ring-accentPurple/50 focus:border-accentPurple` }
       >
         { checked && (
           <svg
@@ -33,7 +33,7 @@ const Checkbox = forwardRef(({ checked = true, onChange, label }, ref) => {
           </svg>
         ) }
       </span>
-      <span className='text-gray-700'>{ label }</span>
+      <span className='text-gray-700 text-sm ml-2.5'>{ label }</span>
     </label>
   );
 });
