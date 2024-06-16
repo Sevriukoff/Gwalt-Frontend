@@ -1,37 +1,41 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import ActionButton from '@/components/actionButton';
 import Input from '@/components/input';
+import FieldError from '@/components/fieldError';
 
-const CheckEmailFrom = ({ onSubmit, next }) => {
-  const { register, handleSubmit, formState: { errors, isValid, isSubmitting } } = useForm();
+const CheckEmailFrom = ({ setTitle, onSubmit, next }) => {
+  const { register, handleSubmit, formState: { errors, isValid, isSubmitting } } = useForm({ mode: 'onChange' });
+
+  useEffect(() => {
+    setTitle('Добро пожаловать');
+  }, []);
 
   const handleFormSubmit = async (data) => {
     await onSubmit(data, next);
   };
 
   return (
-    <form onSubmit={ handleSubmit(handleFormSubmit) } className='space-y-4'>
+    <form onSubmit={ handleSubmit(handleFormSubmit) } className='space-y-5'>
       <div>
         <Input
           id='email'
-          type='email'
           placeholder='Ваша почта'
           className={ `mt-1 block w-full rounded-md shadow-sm ${
             errors.email ? 'border-red-500' : 'border-gray-300'
           }` }
           { ...register('email', {
-            required: 'Email is required',
+            required: 'Почта обязательна',
             pattern: {
               value: /^\S+@\S+$/i,
-              message: 'Invalid email address',
+              message: 'Некорректная почта',
             },
           }) }
         />
-        { errors.email && <span className='text-red-500 text-sm'>{ errors.email.message }</span> }
+        { errors.email && <FieldError error={ errors.email.message } /> }
       </div>
       <ActionButton className='w-full h-[36px]' isOutline={ true } isLoading={ isSubmitting }
-                    disabled={ !isValid || isSubmitting }>Продолжить</ActionButton>
+      >Продолжить</ActionButton>
       <p className='text-xs text-[#999]'>
         Регистрируясь, вы соглашаетесь с тем, что мы можем использовать предоставленные
         вами данные для регистрации и отправки вам уведомлений о наших продуктах и услугах.
