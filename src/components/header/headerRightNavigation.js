@@ -1,32 +1,17 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useAuth } from '@/hoc/authContext';
 import useModal from '@/hooks/useModal';
 import modalNames from '@/app/constants/modalNames';
+import { useUser } from '@/app/services/queries/userQueries';
 
-const ClientHeader = () => {
+const HeaderRightNavigation = () => {
   const { isAuthenticated, userId } = useAuth();
-  const [avatarUrl, setAvatarUrl] = useState('');
   const authModal = useModal(modalNames.AUTH_MODAL);
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      const response = await fetch(`http://localhost:5135/api/v1/users/${ userId }`, { credentials: 'include' });
-      const user = await response.json();
-
-      console.log(user);
-
-      setAvatarUrl(user.avatarUrl);
-    };
-
-    if (userId) {
-      fetchUser();
-    }
-
-  }, [userId]);
+  const { data: user, error } = useUser(userId);
 
   return (
     <div className='flex items-center justify-end gap-5'>
@@ -37,7 +22,7 @@ const ClientHeader = () => {
           </Link>
           <button className='text-[#ccc] hover:text-white ease-in duration-100'>Настройки</button>
           <Link href={ `/users/${ userId }` }>
-            <Image src={ avatarUrl } width={ 30 } height={ 30 } alt='User Avatar'
+            <Image src={ user?.avatarUrl } width={ 30 } height={ 30 } alt='User Avatar'
                    className='rounded-full cursor-pointer' />
           </Link>
         </>
@@ -57,4 +42,4 @@ const ClientHeader = () => {
   );
 };
 
-export default ClientHeader;
+export default HeaderRightNavigation;
