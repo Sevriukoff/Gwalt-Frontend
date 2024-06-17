@@ -1,5 +1,5 @@
 import React from 'react';
-import Carousel from '@/components/Carousel';
+import Саrousel from '@/components/сarousel';
 import SongList from '@/components/songList';
 import HomeComponent from '@/components/homeComponent';
 import AlbumCard from '@/components/albumCard';
@@ -58,7 +58,7 @@ const LeftSide = async () => {
   return (
     <div className=''>
       <HomeComponent title='Популярная музыка на GWalt'>
-        <Carousel gap={ 32 } itemsPerSlide={ 5 }>
+        <Саrousel gap={ 32 } itemsPerSlide={ 5 }>
           {
             popularAlbums.map((album) => (
               <AlbumCard key={ album.id }
@@ -69,7 +69,7 @@ const LeftSide = async () => {
               />
             ))
           }
-        </Carousel>
+        </Саrousel>
       </HomeComponent>
 
       <HomeComponent title='Плейлист дня'>
@@ -77,7 +77,7 @@ const LeftSide = async () => {
       </HomeComponent>
 
       <HomeComponent title='Недавние релизы'>
-        <Carousel gap={ 32 } itemsPerSlide={ 5 }>
+        <Саrousel gap={ 32 } itemsPerSlide={ 5 }>
           {
             newAlbums.map((album) => (
               <AlbumCard key={ album.id }
@@ -88,11 +88,11 @@ const LeftSide = async () => {
               />
             ))
           }
-        </Carousel>
+        </Саrousel>
       </HomeComponent>
 
       <HomeComponent title='Популярные исполнители'>
-        <Carousel gap={ 32 } itemsPerSlide={ 5 }>
+        <Саrousel gap={ 32 } itemsPerSlide={ 5 }>
           {
             popularUsers.map((user) => (
               <ArtistCard key={ user.id }
@@ -103,11 +103,11 @@ const LeftSide = async () => {
               />
             ))
           }
-        </Carousel>
+        </Саrousel>
       </HomeComponent>
 
       <HomeComponent title='Идеально для вечеринки'>
-        <Carousel gap={ 32 } itemsPerSlide={ 5 }>
+        <Саrousel gap={ 32 } itemsPerSlide={ 5 }>
           {
             partyAlbums.map((album) => (
               <AlbumCard key={ album.id }
@@ -118,11 +118,11 @@ const LeftSide = async () => {
               />
             ))
           }
-        </Carousel>
+        </Саrousel>
       </HomeComponent>
 
       <HomeComponent title='Треки для самых грустных'>
-        <Carousel gap={ 32 } itemsPerSlide={ 5 }>
+        <Саrousel gap={ 32 } itemsPerSlide={ 5 }>
           {
             postPunkAlbums.map((album) => (
               <AlbumCard key={ album.id }
@@ -133,7 +133,7 @@ const LeftSide = async () => {
               />
             ))
           }
-        </Carousel>
+        </Саrousel>
       </HomeComponent>
 
     </div>

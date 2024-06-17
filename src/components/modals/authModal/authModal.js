@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useRef, useState } from 'react';
-import Modal from '@/components/modal';
+import Modal from '@/components/modals/modal';
 import modalNames from '@/app/constants/modalNames';
 import dynamic from 'next/dynamic';
 import { toast } from 'react-hot-toast';
@@ -11,6 +11,7 @@ import fetchRest from '@/utils/common/fetchRest';
 import Wizard from '@/components/wizard';
 import MaskedIcon from '@/components/maskedIcon';
 import useModal from '@/hooks/useModal';
+import { useRouter } from 'next/navigation';
 
 const WrapLoader = () => {
   return (
@@ -20,14 +21,14 @@ const WrapLoader = () => {
   );
 };
 
-const CheckEmailForm = dynamic(() => import('@/components/authModal/checkEmailFrom'), {
+const CheckEmailForm = dynamic(() => import('@/components/modals/authModal/checkEmailFrom'), {
   loading: () => <LoaderSpin />,
 });
-const LoginForm = dynamic(() => import('@/components/authModal/loginForm'), { loading: () => <WrapLoader /> });
-const RegisterPasswordForm = dynamic(() => import('@/components/authModal/registerPasswordForm'), {
+const LoginForm = dynamic(() => import('@/components/modals/authModal/loginForm'), { loading: () => <WrapLoader /> });
+const RegisterPasswordForm = dynamic(() => import('@/components/modals/authModal/registerPasswordForm'), {
   loading: () => <WrapLoader />,
 });
-const RegisterDetailsForm = dynamic(() => import('@/components/authModal/registerDetailsForm'), {
+const RegisterDetailsForm = dynamic(() => import('@/components/modals/authModal/registerDetailsForm'), {
   loading: () => <WrapLoader />,
 });
 
@@ -37,6 +38,7 @@ const AuthModal = () => {
   const [title, setTitle] = useState('Добро пожаловать');
   const password = useRef('');
 
+  const router = useRouter();
   const { isOpen, close } = useModal(modalNames.AUTH_MODAL);
   const { setIsAuthenticated, setUserId } = useAuth();
 
@@ -72,6 +74,7 @@ const AuthModal = () => {
       if (response) {
         close();
         toast.success('Успешно');
+        router.replace(router.asPath);
       } else {
         toast.error(`Неверный логин или пароль`);
       }

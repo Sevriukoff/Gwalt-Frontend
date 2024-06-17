@@ -1,9 +1,10 @@
 import React from 'react';
+import Album from '@/components/album';
 
 const Page = () => {
   return (
     <div>
-      Tracks
+      <Album />
     </div>
   );
 };

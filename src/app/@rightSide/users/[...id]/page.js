@@ -3,7 +3,7 @@ import fetchRest from '@/utils/common/fetchRest';
 
 const fetchUser = async (id) => {
   try {
-    const response = await fetchRest(`/v1/users/${ id }`);
+    const response = await fetchRest(`/v1/users/${ id }?includes=Albums;Albums.Tracks&withStats=true`);
     return await response.json();
   } catch (error) {
     console.error('Fetch error:', error);
@@ -15,7 +15,6 @@ const UserPageRightSide = async ({ params }) => {
 
   return (
     <div>
-      <h1>{ userPageId }</h1>
       <div className='flex gap-3 text-xl text-[#999] leading-5'>
         <div className='border-r pr-10'>
           <h3 className='text-[12px]'>Отслеживают</h3>

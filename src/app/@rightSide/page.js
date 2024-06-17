@@ -43,8 +43,8 @@ const fetchListensHistory = async (sessionId) => {
 
 const RightSide = async () => {
   const cookieStore = cookies();
-  const sessionId = cookieStore.get('session-id').value;
-  const listensHistory = await fetchListensHistory(sessionId);
+
+  const listensHistory = cookieStore.has('session-id') ? await fetchListensHistory(cookieStore.get('session-id').value) : [];
 
   return (
     <div className='top-6 right-0'>
