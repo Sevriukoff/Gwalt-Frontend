@@ -49,6 +49,11 @@ const ActionButton = forwardRef(
     },
     ref,
   ) => {
+    const textClasses = twMerge(
+      'text-sm',
+      isOutline ? 'text-white' : 'text-textDefault',
+    );
+
     const buttonClasses = twMerge(
       'flex gap-2 items-center justify-center px-3 py-1 btn-group rounded',
       disabled || isLoading
@@ -57,17 +62,13 @@ const ActionButton = forwardRef(
       isOutline
         ? 'bg-accentPurple hover:bg-accentPurpleActive'
         : 'border border-gray-300',
+      textClasses,
       className,
     );
 
     const iconClasses = twMerge(
       isOutline ? 'text-white' : 'text-gray-300 btn-group-hover:text-gray-500',
       icon.className,
-    );
-
-    const textClasses = twMerge(
-      'text-sm',
-      isOutline ? 'text-white' : 'text-textDefault',
     );
 
     return (
@@ -90,7 +91,7 @@ const ActionButton = forwardRef(
                 style={ { width: `${ icon.width }px`, height: `${ icon.height }px` } }
               />
             ) }
-            { children && <span className={ textClasses }>{ children }</span> }
+            { children && children }
           </>
         ) }
       </button>

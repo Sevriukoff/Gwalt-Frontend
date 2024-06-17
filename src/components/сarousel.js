@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 
-const Carousel = ({ children, itemsPerSlide = 4, gap = 16 }) => {
+const Саrousel = ({ children, itemsPerSlide = 4, gap = 16 }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [cardWidth, setCardWidth] = useState(0);
   const carouselRef = useRef(null);
@@ -90,4 +90,4 @@ const Carousel = ({ children, itemsPerSlide = 4, gap = 16 }) => {
   );
 };
 
-export default Carousel;
+export default Саrousel;

@@ -3,7 +3,6 @@ import MaskedIcon from '@/components/maskedIcon';
 import Image from 'next/image';
 
 const SongItem = ({ song }) => {
-  console.log(song);
   return (
     <div className='flex gap-3'>
       <Image className='py-1 max-h-[50px] box-content' src={ song.coverUrl } alt='cover' height={ 50 } width={ 50 } />

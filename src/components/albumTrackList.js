@@ -7,7 +7,7 @@ import ActionButton from '@/components/actionButton';
 import MaskedIcon from '@/components/maskedIcon';
 import React from 'react';
 import useOnPlay from '@/hooks/useOnPlay';
-import LikeButton from '@/components/likeButton';
+import LikeButton from '@/components/likeButtons/likeButton';
 
 export const AlbumTrackList = ({ coverUrl = '', tracks = [] }) => {
   const onPlay = useOnPlay(tracks);
@@ -26,7 +26,6 @@ export const AlbumTrackList = ({ coverUrl = '', tracks = [] }) => {
               <PlayButton iconWidth={ 10 } iconHeight={ 10 }
                           className='hidden group-hover:flex p-1.5 absolute left-1 top-1'
                           onClick={ () => {
-                            console.log(track.id);
                             onPlay(track.id);
                           } } />
             </div>
