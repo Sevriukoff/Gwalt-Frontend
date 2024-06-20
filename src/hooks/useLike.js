@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useAuth } from '@/hoc/authContext';
 import useModal from '@/hooks/useModal';
-import ModalNames from '@/app/constants/modalNames';
+import ModalNames from '@/constants/modalNames';
 import fetchRest from '@/utils/common/fetchRest';
 
 const useLike = ({

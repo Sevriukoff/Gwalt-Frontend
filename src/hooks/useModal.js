@@ -1,12 +1,13 @@
-import useModalStore from "@/hooks/useModalStore";
+import useModalStore from '@/hooks/useModalStore';
 
 const useModal = (modalName) => {
-  const { isModalOpen, openModal, closeModal } = useModalStore();
+  const { isModalOpen, openModal, closeModal, getModalData } = useModalStore();
 
   return {
     isOpen: isModalOpen(modalName),
-    open: () => openModal(modalName),
+    open: (data = null) => openModal(modalName, data),
     close: () => closeModal(modalName),
+    data: getModalData(modalName),
   };
 };
 

@@ -5,7 +5,7 @@ import { useAuth } from '@/hoc/authContext';
 import useModal from '@/hooks/useModal';
 import fetchRest from '@/utils/common/fetchRest';
 import { toast } from 'react-hot-toast';
-import ModalNames from '@/app/constants/modalNames';
+import ModalNames from '@/constants/modalNames';
 
 const useFollow = (followingId, followingName = '', setFollowersCount = (followersCount) => {
 }) => {
