@@ -10,6 +10,7 @@ const Modal = ({
                  description = '',
                  children,
                  height = 450,
+                 width = 450,
                  isOpen = false,
                  onChange = (isOpen) => console.log(),
                }) => {
@@ -18,8 +19,8 @@ const Modal = ({
     <Dialog.Root open={ isOpen } defaultOpen={ isOpen } onOpenChange={ onChange }>
       <Dialog.Portal>
         <Dialog.Overlay className='z-30 bg-gray-200/90 backdrop-blur-[1px] fixed inset-0' />
-        <Dialog.Content style={ { height } }
-                        className='flex flex-col justify-center z-30 fixed w-[90vw] h-auto min-h-[100px] max-h-[85vh] max-w-[450px] top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]
+        <Dialog.Content style={ { height, width } }
+                        className='flex flex-col justify-center z-30 fixed w-[90vw] h-auto min-h-[100px] max-h-[85vh] max-w-[850px] top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]
                                       drop-shadow-md border border-gray-300 rounded-md bg-gray-100 p-[30px] focus:outline-none'>
           <div className='border-b pb-4 mb-4 flex flex-col items-center justify-center gap-1'>
             <Dialog.Title className='text-2xl text-center font-medium'>

@@ -1,11 +1,11 @@
 'use client';
 
 import React from 'react';
-import modalNames from '@/app/constants/modalNames';
+import modalNames from '@/constants/modalNames';
 import Modal from '@/components/modals/modal';
 import useModal from '@/hooks/useModal';
 import { useForm } from 'react-hook-form';
-import { useUser } from '@/app/services/queries/userQueries';
+import { useUser } from '@/services/queries/userQueries';
 import { useAuth } from '@/hoc/authContext';
 
 const EditProfileModal = () => {
@@ -22,8 +22,11 @@ const EditProfileModal = () => {
   };
 
   return (
-    <Modal modalName={ modalNames.EDIT_PROFILE_MODAL } isOpen={ isOpen } title='Редактировать профиль'
-           onChange={ handleChangeOpen } height={ null }>
+    <Modal modalName={ modalNames.EDIT_PROFILE_MODAL }
+           isOpen={ isOpen }
+           title='Редактировать профиль'
+           onChange={ handleChangeOpen }
+           height={ null }>
       <form>
         <div className='flex justify-center mb-4'>
           <div className='relative'>

@@ -5,16 +5,13 @@ import { usePathname } from 'next/navigation';
 import ActionButton from '@/components/actionButton';
 import FollowButton from '@/components/followButtons/followButton';
 import React from 'react';
-import { useAuth } from '@/hoc/authContext';
 import useModal from '@/hooks/useModal';
-import ModalNames from '@/app/constants/modalNames';
+import ModalNames from '@/constants/modalNames';
 
-const UserNavigation = ({ userName, userPageId }) => {
+const UserNavigation = ({ isCurrentUser, userName, userPageId }) => {
   const pathname = usePathname();
 
   const editProfileModal = useModal(ModalNames.EDIT_PROFILE_MODAL);
-  const { isAuthenticated, userId } = useAuth();
-  const isCurrentUser = isAuthenticated && (userPageId === userId);
 
   const getLinkClass = (path) => {
     return pathname === path

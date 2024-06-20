@@ -2,7 +2,7 @@
 
 import React, { useRef, useState } from 'react';
 import Modal from '@/components/modals/modal';
-import modalNames from '@/app/constants/modalNames';
+import modalNames from '@/constants/modalNames';
 import dynamic from 'next/dynamic';
 import { toast } from 'react-hot-toast';
 import LoaderSpin from '@/components/loaderSpin';

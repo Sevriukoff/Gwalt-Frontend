@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import AuthModal from '@/components/modals/authModal/authModal';
 import EditProfileModal from '@/components/modals/editProfileModal';
+import ImageCropperModal from '@/components/modals/imageCropperModal';
 
 const ModalProvider = () => {
   const [isMounted, setIsMounted] = useState(false);
@@ -17,6 +18,7 @@ const ModalProvider = () => {
   return (
     <>
       <AuthModal />
+      <ImageCropperModal />
       <EditProfileModal />
     </>
   );
