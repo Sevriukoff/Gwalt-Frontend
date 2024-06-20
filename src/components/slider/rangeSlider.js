@@ -10,6 +10,7 @@ const RangeSlider = ({
                        max = 100,
                        buffer = 0,
                        value = 0,
+                       step = 1,
                        orientation = 'horizontal',
                        onChange = (value) => console.log(),
                        onDragStart = () => console.log(),
@@ -83,6 +84,7 @@ const RangeSlider = ({
         min={ min }
         max={ max }
         value={ value }
+        step={ step }
         disabled={ disabled }
         onChange={ handleOnChange }
         onMouseDown={ handleDragStart }

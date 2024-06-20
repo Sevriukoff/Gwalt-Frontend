@@ -4,7 +4,7 @@ import { throttle } from 'throttle-debounce';
 import SeekBar from '@/components/musicPlayer/seekBar';
 import PlayControls from '@/components/musicPlayer/playControls';
 import VolumeControl from '@/components/musicPlayer/volumeControl';
-import * as listenService from '@/app/services/listenService';
+import * as listenService from '@/services/listenService';
 import useMusicPlayer from '@/hooks/useMusicPlayer';
 
 const MusicPlayerContent = ({ track, trackUrl, onEnded, onNext, onPrevious }) => {
