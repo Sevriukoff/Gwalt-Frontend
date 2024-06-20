@@ -23,6 +23,8 @@ const ArtistCard = (
         <Image
           src={ avatarUrl }
           alt='avatar'
+          placeholder={ 'blur' }
+          blurDataURL={ '/cover-default.svg' }
           layout='fill'
           objectFit='cover'
           className='rounded-full border border-gray-100 group-hover:scale-110 transform transition duration-300'
@@ -30,7 +32,7 @@ const ArtistCard = (
         <div
           className='absolute h-full rounded-full bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent opacity-0 group-hover:opacity-25 transition duration-300' />
         {
-          userId != id &&
+          userId !== id &&
           <div
             className='absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300'>
             <RoundFollowButton followingId={ id } name={ name } setFollowersCount={ setFollowersCount } />
@@ -42,6 +44,16 @@ const ArtistCard = (
               className='text-base text-center text-black font-normal cursor-pointer'>{ name }</Link>
         <p className='text-xs text-gray-500'>{ followersCount } followers</p>
       </div>
+    </div>
+  );
+};
+
+export const ArtistCardSkeleton = () => {
+  return (
+    <div className='flex flex-col items-center gap-1'>
+      <div className='w-[170px] h-[170px] rounded-full bg-accentPurple/10 animate-pulse' />
+      <div className='w-[90px] h-[10px] rounded bg-accentPurple/10 animate-pulse' />
+      <div className='w-[50px] h-[10px] rounded bg-accentPurple/10 animate-pulse' />
     </div>
   );
 };

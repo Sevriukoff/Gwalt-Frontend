@@ -2,9 +2,9 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 
-const Саrousel = ({ children, itemsPerSlide = 4, gap = 16 }) => {
+const Carousel = ({ children, itemsPerSlide = 4, gap = 16, startWidth = 170 }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [cardWidth, setCardWidth] = useState(0);
+  const [cardWidth, setCardWidth] = useState(startWidth);
   const carouselRef = useRef(null);
 
   const totalItems = React.Children.count(children);
@@ -90,4 +90,4 @@ const Саrousel = ({ children, itemsPerSlide = 4, gap = 16 }) => {
   );
 };
 
-export default Саrousel;
+export default Carousel;

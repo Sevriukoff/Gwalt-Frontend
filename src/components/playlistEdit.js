@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import MaskedIcon from '@/components/maskedIcon';
 import TrackUpload from '@/components/trackUpload';
+import { base64ToFile } from '@/utils/common/files';
 
 const PlaylistEdit = ({ selectedFiles }) => {
   const [imageSrc, setImageSrc] = useState('');
@@ -70,17 +71,6 @@ const PlaylistEdit = ({ selectedFiles }) => {
     const updatedTracks = [...trackData];
     updatedTracks[index].genres = selectedOptions.map(option => option.value);
     setTrackData(updatedTracks);
-  };
-
-  const base64ToFile = (base64String, filename) => {
-    const byteString = atob(base64String.split(',')[1]);
-    const mimeString = base64String.split(',')[0].split(':')[1].split(';')[0];
-    const ab = new ArrayBuffer(byteString.length);
-    const ia = new Uint8Array(ab);
-    for (let i = 0; i < byteString.length; i++) {
-      ia[i] = byteString.charCodeAt(i);
-    }
-    return new File([ab], filename, { type: mimeString });
   };
 
   const getCurrentUTCDate = () => {

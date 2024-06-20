@@ -29,4 +29,14 @@ const AlbumCard = (
   );
 };
 
+export const AlbumCardSkeleton = () => {
+  return (
+    <div className='flex flex-col gap-1'>
+      <div className='w-[170px] h-[170px] rounded bg-accentPurple/10 animate-pulse' />
+      <div className='w-[90px] h-[10px] rounded-sm bg-accentPurple/10 animate-pulse' />
+      <div className='w-[50px] h-[10px] rounded-sm bg-accentPurple/10 animate-pulse' />
+    </div>
+  );
+};
+
 export default AlbumCard;
