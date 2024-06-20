@@ -20,7 +20,7 @@ const fetchTracks = async (id) => {
   }
 };
 
-const UserPageLeftSide = async ({ params }) => {
+const CenterBlockUserPage = async ({ params }) => {
   const userPageId = params.id;
   const tracks = await fetchTracks(userPageId);
 
@@ -44,4 +44,4 @@ const UserPageLeftSide = async ({ params }) => {
   );
 };
 
-export default UserPageLeftSide;
+export default CenterBlockUserPage;

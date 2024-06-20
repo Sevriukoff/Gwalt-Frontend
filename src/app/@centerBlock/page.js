@@ -1,10 +1,9 @@
-import React from 'react';
-import Саrousel from '@/components/сarousel';
+import React, { Suspense } from 'react';
 import SongList from '@/components/songList';
 import HomeComponent from '@/components/homeComponent';
-import AlbumCard from '@/components/albumCard';
-import ArtistCard from '@/components/artistCard';
 import fetchRest from '@/utils/common/fetchRest';
+import AlbumsCarousel, { AlbumsCarouselSkeleton } from '@/app/@centerBlock/albumsCarousel';
+import ArtistsCarousel, { ArtistsCarouselSkeleton } from '@/app/@centerBlock/artistsCarousel';
 
 const songs = [
   { artist: 'Billie Eilish', title: 'No Time To Die', listenCount: '7.81M' },
@@ -20,56 +19,39 @@ const songs = [
 
 const fetchNewAlbums = async () => {
   const response = await fetchRest('/v1/albums?includes=Genre&orderBy=releaseDateDesc&pageNumber=1&pageSize=10');
-  const data = await response.json();
-
-  return data;
+  return await response.json();
 };
 
 const fetchPopularAlbums = async () => {
   const response = await fetchRest('/v1/albums?includes=Genre&orderBy=ListensCountDesc&pageNumber=1&pageSize=10');
-  const data = await response.json();
-
-  return data;
+  return await response.json();
 };
 
 const fetchPopularArtists = async () => {
   const response = await fetchRest('/v1/users?withStats=true&orderBy=FollowersCountDesc&pageNumber=1&pageSize=10');
-  const data = await response.json();
-
-  return data;
+  return await response.json();
 };
 
 const fetchAlbumByGenre = async (genres = []) => {
   const genreStr = genres.join(';');
   const response = await fetchRest(`/v1/albums?includes=Genre&genres=${ genreStr }&orderBy=releaseDateDesc&pageNumber=1&pageSize=10`);
-  const data = await response.json();
-
-  return data;
+  return await response.json();
 };
 
-
-const LeftSide = async () => {
-  const newAlbums = await fetchNewAlbums();
-  const popularAlbums = await fetchPopularAlbums();
-  const popularUsers = await fetchPopularArtists();
-  const postPunkAlbums = await fetchAlbumByGenre(['post-punk']);
-  const partyAlbums = await fetchAlbumByGenre(['hip-hop %26 rap', 'pop']);
+const CenterBlockHomePage = async () => {
+  const newAlbums = fetchNewAlbums();
+  const popularAlbums = fetchPopularAlbums();
+  const popularUsers = fetchPopularArtists();
+  const postPunkAlbums = fetchAlbumByGenre(['post-punk']);
+  const partyAlbums = fetchAlbumByGenre(['hip-hop %26 rap', 'pop']);
 
   return (
     <div className=''>
+
       <HomeComponent title='Популярная музыка на GWalt'>
-        <Саrousel gap={ 32 } itemsPerSlide={ 5 }>
-          {
-            popularAlbums.map((album) => (
-              <AlbumCard key={ album.id }
-                         albumId={ album.id }
-                         coverUrl={ album.coverUrl }
-                         title={ album.title }
-                         genre={ album.genre }
-              />
-            ))
-          }
-        </Саrousel>
+        <Suspense fallback={ <AlbumsCarouselSkeleton /> }>
+          <AlbumsCarousel dataPromise={ popularAlbums } />
+        </Suspense>
       </HomeComponent>
 
       <HomeComponent title='Плейлист дня'>
@@ -77,67 +59,30 @@ const LeftSide = async () => {
       </HomeComponent>
 
       <HomeComponent title='Недавние релизы'>
-        <Саrousel gap={ 32 } itemsPerSlide={ 5 }>
-          {
-            newAlbums.map((album) => (
-              <AlbumCard key={ album.id }
-                         albumId={ album.id }
-                         coverUrl={ album.coverUrl }
-                         title={ album.title }
-                         genre={ album.genre }
-              />
-            ))
-          }
-        </Саrousel>
+        <Suspense fallback={ <AlbumsCarouselSkeleton /> }>
+          <AlbumsCarousel dataPromise={ newAlbums } />
+        </Suspense>
       </HomeComponent>
 
       <HomeComponent title='Популярные исполнители'>
-        <Саrousel gap={ 32 } itemsPerSlide={ 5 }>
-          {
-            popularUsers.map((user) => (
-              <ArtistCard key={ user.id }
-                          id={ user.id }
-                          avatarUrl={ user.avatarUrl }
-                          name={ user.name }
-                          followerCount={ user.followersCount }
-              />
-            ))
-          }
-        </Саrousel>
+        <Suspense fallback={ <ArtistsCarouselSkeleton /> }>
+          <ArtistsCarousel dataPromise={ popularUsers } />
+        </Suspense>
       </HomeComponent>
 
       <HomeComponent title='Идеально для вечеринки'>
-        <Саrousel gap={ 32 } itemsPerSlide={ 5 }>
-          {
-            partyAlbums.map((album) => (
-              <AlbumCard key={ album.id }
-                         albumId={ album.id }
-                         coverUrl={ album.coverUrl }
-                         title={ album.title }
-                         genre={ album.genre }
-              />
-            ))
-          }
-        </Саrousel>
+        <Suspense fallback={ <AlbumsCarouselSkeleton /> }>
+          <AlbumsCarousel dataPromise={ partyAlbums } />
+        </Suspense>
       </HomeComponent>
 
       <HomeComponent title='Треки для самых грустных'>
-        <Саrousel gap={ 32 } itemsPerSlide={ 5 }>
-          {
-            postPunkAlbums.map((album) => (
-              <AlbumCard key={ album.id }
-                         albumId={ album.id }
-                         coverUrl={ album.coverUrl }
-                         title={ album.title }
-                         genre={ album.genre }
-              />
-            ))
-          }
-        </Саrousel>
+        <Suspense fallback={ <AlbumsCarouselSkeleton /> }>
+          <AlbumsCarousel dataPromise={ postPunkAlbums } />
+        </Suspense>
       </HomeComponent>
-
     </div>
   );
 };
 
-export default LeftSide;
+export default CenterBlockHomePage;

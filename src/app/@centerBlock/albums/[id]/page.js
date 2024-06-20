@@ -11,7 +11,7 @@ const fetchAlbum = async (albumId) => {
   return await response.json();
 };
 
-const Page = async ({ params }) => {
+const CenterBlockAlbumPage = async ({ params }) => {
   const albumId = params.id;
   const album = await fetchAlbum(albumId);
 
@@ -46,4 +46,4 @@ const Page = async ({ params }) => {
   );
 };
 
-export default Page;
+export default CenterBlockAlbumPage;
