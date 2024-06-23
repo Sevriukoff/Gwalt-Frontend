@@ -1,4 +1,4 @@
-import fetchRest from '@/utils/common/fetchRest';
+import fetchRest from '@/services/common/fetchRest';
 
 export const base64ToFile = (base64String, filename) => {
   const byteString = atob(base64String.split(',')[1]);

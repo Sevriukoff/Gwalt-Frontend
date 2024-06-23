@@ -1,4 +1,4 @@
-import fetchRest from '@/utils/common/fetchRest';
+import fetchRest from '@/services/common/fetchRest';
 
 let activeListeningTime = 0;
 let maxListeningTime = 0;

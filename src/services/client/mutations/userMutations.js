@@ -1,6 +1,6 @@
-import { useUser } from '@/services/queries/userQueries';
+import { useUser } from '@/services/client/queries/userQueries';
 import useSWRMutation from 'swr/mutation';
-import { patchUser } from '@/utils/common/files';
+import { patchUser } from '@/services/common/files';
 
 export const usePatchUser = (userId) => {
   const { mutate } = useUser(userId);
