@@ -1,4 +1,4 @@
-import ActionButton from '@/components/actionButton';
+import ActionButton from '@/components/buttons/actionButton';
 import { Controller, useForm } from 'react-hook-form';
 import Input from '@/components/input';
 import Select from 'react-select';

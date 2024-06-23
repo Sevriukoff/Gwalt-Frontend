@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { useAuth } from '@/hoc/authContext';
 import useModal from '@/hooks/useModal';
 import modalNames from '@/constants/modalNames';
-import { useUser } from '@/services/queries/userQueries';
+import { useUser } from '@/services/client/queries/userQueries';
 
 const HeaderRightNavigation = () => {
   const { isAuthenticated, userId } = useAuth();

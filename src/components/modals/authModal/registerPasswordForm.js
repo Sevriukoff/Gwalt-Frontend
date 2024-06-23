@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import Input from '@/components/input';
-import ActionButton from '@/components/actionButton';
+import ActionButton from '@/components/buttons/actionButton';
 import { useForm } from 'react-hook-form';
 import FieldError from '@/components/fieldError';
 

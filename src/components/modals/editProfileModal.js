@@ -5,7 +5,7 @@ import modalNames from '@/constants/modalNames';
 import Modal from '@/components/modals/modal';
 import useModal from '@/hooks/useModal';
 import { useForm } from 'react-hook-form';
-import { useUser } from '@/services/queries/userQueries';
+import { useUser } from '@/services/client/queries/userQueries';
 import { useAuth } from '@/hoc/authContext';
 
 const EditProfileModal = () => {

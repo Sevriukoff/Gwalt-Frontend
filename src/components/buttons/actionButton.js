@@ -55,9 +55,9 @@ const ActionButton = forwardRef(
     );
 
     const buttonClasses = twMerge(
-      'flex gap-2 items-center justify-center px-3 py-1 btn-group rounded',
+      'flex gap-2 items-center justify-center px-3 py-1 btn-group rounded transition-colors duration-200 ease-in-out',
       disabled || isLoading
-        ? 'opacity-50 cursor-not-allowed'
+        ? 'opacity-90 cursor-not-allowed'
         : 'hover:border-gray-500',
       isOutline
         ? 'bg-accentPurple hover:bg-accentPurpleActive'
@@ -79,21 +79,20 @@ const ActionButton = forwardRef(
         { ...props }
         disabled={ disabled || isLoading }
       >
-        { isLoading ? (
-          <LoaderSpin className={ `${ isOutline ? 'text-white' : 'text-accentPurple' } ` } size={ icon.height } />
-        ) : (
-          <>
-            { icon && icon.src && (
-              <MaskedIcon
-                src={ icon.src }
-                alt={ children ? children.toString() : '' }
-                className={ iconClasses }
-                style={ { width: `${ icon.width }px`, height: `${ icon.height }px` } }
-              />
-            ) }
-            { children && children }
-          </>
+        { !isLoading && icon && icon.src && (
+          <MaskedIcon
+            src={ icon.src }
+            alt={ children ? children.toString() : '' }
+            className={ iconClasses }
+            style={ { width: `${ icon.width }px`, height: `${ icon.height }px` } }
+          />
         ) }
+        {
+          isLoading && (
+            <LoaderSpin className={ `${ isOutline ? 'text-white' : 'text-accentPurple' } ` } size={ icon.height } />
+          )
+        }
+        { children && children }
       </button>
     );
   },

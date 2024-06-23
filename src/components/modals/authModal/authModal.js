@@ -7,7 +7,7 @@ import dynamic from 'next/dynamic';
 import { toast } from 'react-hot-toast';
 import LoaderSpin from '@/components/loaderSpin';
 import { useAuth } from '@/hoc/authContext';
-import fetchRest from '@/utils/common/fetchRest';
+import fetchRest from '@/services/common/fetchRest';
 import Wizard from '@/components/wizard';
 import MaskedIcon from '@/components/maskedIcon';
 import useModal from '@/hooks/useModal';

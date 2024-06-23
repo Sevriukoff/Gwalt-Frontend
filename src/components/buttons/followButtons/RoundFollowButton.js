@@ -1,4 +1,4 @@
-import ActionButton from '@/components/actionButton';
+import ActionButton from '@/components/buttons/actionButton';
 import React from 'react';
 import useFollow from '@/hooks/useFollow';
 

@@ -3,7 +3,7 @@
 import Cropper from 'react-easy-crop';
 import { useCallback, useState } from 'react';
 import RangeSlider from '@/components/slider/rangeSlider';
-import ActionButton from '@/components/actionButton';
+import ActionButton from '@/components/buttons/actionButton';
 
 const ImageCropper = ({ imageSrc, onCropCancel, onCropSubmit }) => {
   const [crop, setCrop] = useState({ x: 0, y: 0 });

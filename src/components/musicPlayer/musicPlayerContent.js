@@ -4,7 +4,7 @@ import { throttle } from 'throttle-debounce';
 import SeekBar from '@/components/musicPlayer/seekBar';
 import PlayControls from '@/components/musicPlayer/playControls';
 import VolumeControl from '@/components/musicPlayer/volumeControl';
-import * as listenService from '@/services/listenService';
+import * as listenService from '@/services/client/listenService';
 import useMusicPlayer from '@/hooks/useMusicPlayer';
 
 const MusicPlayerContent = ({ track, trackUrl, onEnded, onNext, onPrevious }) => {
@@ -20,14 +20,12 @@ const MusicPlayerContent = ({ track, trackUrl, onEnded, onNext, onPrevious }) =>
   const audioRef = useRef(null);
   const requestRef = useRef(null);
 
-  const {
-    isPlaying,
-    setIsPlaying,
-    progress,
-    setProgress,
-    isSeekingFromWaveform,
-    setIsSeekingFromWaveform,
-  } = useMusicPlayer();
+  const isPlaying = useMusicPlayer((state) => state.isPlaying);
+  const setIsPlaying = useMusicPlayer((state) => state.setIsPlaying);
+  const progress = useMusicPlayer((state) => state.progress);
+  const setProgress = useMusicPlayer((state) => state.setProgress);
+  const isSeekingFromWaveform = useMusicPlayer((state) => state.isSeekingFromWaveform);
+  const setIsSeekingFromWaveform = useMusicPlayer((state) => state.setIsSeekingFromWaveform);
 
   useEffect(() => {
     if (audioRef.current && isSeekingFromWaveform) {
@@ -65,12 +63,13 @@ const MusicPlayerContent = ({ track, trackUrl, onEnded, onNext, onPrevious }) =>
 
   useEffect(() => {
     const audio = audioRef.current;
-
     if (audio === null)
       return;
 
     if (isPlaying)
       audio.play();
+    else
+      audio.pause();
 
     listenService.setLastPlayTime(audio.currentTime);
 

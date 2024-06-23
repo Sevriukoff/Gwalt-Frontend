@@ -2,7 +2,7 @@
 
 import React from 'react';
 import useFollow from '@/hooks/useFollow';
-import ActionButton from '@/components/actionButton';
+import ActionButton from '@/components/buttons/actionButton';
 
 const FollowButton = ({ children, followingId, name, setFollowersCount }) => {
   const { isFollowed, isLoading, handleToggleFollow } = useFollow(followingId, name, setFollowersCount);

@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { useAuth } from '@/hoc/authContext';
 import useModal from '@/hooks/useModal';
 import ModalNames from '@/constants/modalNames';
-import fetchRest from '@/utils/common/fetchRest';
+import fetchRest from '@/services/common/fetchRest';
 
 const useLike = ({
                    likeableType = 'track', likeableId, setLikesCount = (likesCount) => {

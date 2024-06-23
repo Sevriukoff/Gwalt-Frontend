@@ -3,11 +3,15 @@
 import React, { useState } from 'react';
 import WaveForm from '@/components/waveForm';
 import CoverImage from '@/components/coverImage';
-import LikeButton from '@/components/likeButtons/likeButton';
+import LikeButton from '@/components/buttons/likeButtons/likeButton';
+import useMusicPlayer from '@/hooks/useMusicPlayer';
+import SoundBar from '@/components/soundBar';
+import TrackPlayButton from '@/components/buttons/trackPlayButton';
 
 const Track = ({
                  id = 0,
-                 author = '',
+                 tracksIds = [],
+                 authors = [],
                  title = '',
                  trackDuration = 0,
                  imgUrl = '',
@@ -21,6 +25,7 @@ const Track = ({
                }) => {
 
   const [likesCount, setLikesCount] = useState(like);
+  const setActiveTracksIds = useMusicPlayer(state => state.setIds);
 
   const getStatusImg = () => {
     if (listensCount > 100000) {
@@ -34,7 +39,19 @@ const Track = ({
 
   return (
     <div className='flex gap-4 text-[#333]'>
-      <CoverImage coverUrl={ imgUrl } clasName='min-w-[160px] min-h-[160px] text-transparent' />
+      <CoverImage coverUrl={ imgUrl } clasName='min-w-[160px] min-h-[160px] text-transparent'
+                  playButton={ <TrackPlayButton iconWidth={ 12 }
+                                                iconHeight={ 12 }
+                                                className='p-2'
+                                                trackId={ id }
+                                                onClick={ () => {
+                                                  setActiveTracksIds(tracksIds);
+                                                } }
+                  >
+                    <div className='relative z-10 flex items-center justify-center'>
+                      <SoundBar barWidth={ 3 } minHeight={ 5 } maxHeight={ 20 } gap={ '2px' } />
+                    </div>
+                  </TrackPlayButton> } />
       <div className='flex 0 flex-col justify-between w-full pt-2'>
         <div className='flex w-full'>
           <div className='flex items-center justify-center rounded-full bg-[#9388D8] w-[36px] h-[36px]'>
@@ -42,7 +59,11 @@ const Track = ({
           </div>
           <div className='flex flex-col gap-1 ml-2.5 w-full'>
             <div className='flex justify-between'>
-              <p className='text-[#999] font-light text-[12px] leading-1'>{ author }</p>
+              {
+                authors.map(
+                  x => <p className='text-[#999] font-light text-[12px] leading-1'>{ x.name }</p>,
+                )
+              }
               <p className='text-[#999] font-light text-[12px] leading-1'>{ date }</p>
             </div>
             <div className='flex justify-between'>

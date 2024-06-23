@@ -1,7 +1,11 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
 import CoverImage from '@/components/coverImage';
 import MaskedIcon from '@/components/maskedIcon';
+import SoundBar from '@/components/soundBar';
+import AlbumPlayButton from '@/components/buttons/albumPlayButton';
 
 const AlbumCard = (
   {
@@ -11,9 +15,19 @@ const AlbumCard = (
     genre = 'hip-hop & rap',
   },
 ) => {
+
   return (
     <div className='flex flex-col w-full'>
-      <CoverImage coverUrl={ coverUrl } clasName='w-full pb-[100%]'>
+      <CoverImage coverUrl={ coverUrl } clasName='w-full pb-[100%]'
+                  playButton={ <AlbumPlayButton iconWidth={ 26 }
+                                                iconHeight={ 26 }
+                                                className='p-4'
+                                                fetchTracksUrl={ `/v1/albums/${ albumId }/tracks?onlyId=true` }
+                  >
+                    <div className='relative z-10 flex items-center justify-center'>
+                      <SoundBar barWidth={ 4 } gap={ '3px' } />
+                    </div>
+                  </AlbumPlayButton> }>
         <div className='absolute opacity-0 z-10 bottom-1 right-1 group-hover:opacity-80 transition duration-300'>
           <button>
             <MaskedIcon src='/like.svg' alt='like' className='text-white opacity-80 w-5 h-5' />

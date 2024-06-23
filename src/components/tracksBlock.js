@@ -1,20 +1,20 @@
-'use client';
-
 import React from 'react';
 import TrackItem, { TrackItemSkeleton } from '@/components/trackItem';
 
-const TracksBlock = ({ icon, title, tracks = [], children }) => {
+const TracksBlock = ({ icon, title, tracks = [], children, trackItem: TrackItemComponent = TrackItem }) => {
   return (
     <div className=''>
-      <div className='flex justify-between border-b border-b-gray-100 mb-2'>
+      <div className='flex items-center justify-between border-b border-b-gray-100 pb-2 mb-2'>
         <div className='flex items-center gap-1.5'>
           { icon }
           <span className='text-sm text-[#999]'>{ title }</span>
         </div>
-        <span className='text-sm text-[#999] mb-4'>Все</span>
+        <span className='text-sm text-[#999]'>Все</span>
       </div>
-      <div className='flex flex-col gap-3'>
-        { children ? children : tracks.map(x => <TrackItem key={ x.id } track={ x } />) }
+      <div className='flex flex-col gap-0.5'>
+        { children ? children : tracks.map(x => <TrackItemComponent key={ x.id }
+                                                                    track={ x }
+                                                                    tracksIds={ tracks.map(x => x.id) } />) }
       </div>
     </div>
   );

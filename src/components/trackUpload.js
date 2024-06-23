@@ -33,6 +33,7 @@ const TrackUpload = ({ track, index, genres, handleTrackNameChange, handleIsExpl
         <Select
           className='w-full'
           isMulti
+          maxMenuHeight={ 100 }
           placeholder='Выберите жанр трека'
           options={ genres }
           value={ genres.filter(genre => track.genres.includes(genre.value)) }

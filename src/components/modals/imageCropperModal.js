@@ -3,9 +3,9 @@ import Modal from '@/components/modals/modal';
 import modalNames from '@/constants/modalNames';
 import useModal from '@/hooks/useModal';
 import ImageCropper from '@/components/imageCropper';
-import fetchRest from '@/utils/common/fetchRest';
-import { usePatchUser } from '@/services/mutations/userMutations';
-import { updateServerCache } from '@/utils/server/cache';
+import fetchRest from '@/services/common/fetchRest';
+import { usePatchUser } from '@/services/client/mutations/userMutations';
+import { updateServerCache } from '@/services/server/cache';
 
 const ImageCropperModal = () => {
   const { isOpen, close, data } = useModal(modalNames.IMAGE_CROPPER_MODAL);

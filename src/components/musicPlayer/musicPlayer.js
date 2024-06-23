@@ -5,52 +5,54 @@ import useMusicPlayer from '@/hooks/useMusicPlayer';
 import MusicPlayerContent from '@/components/musicPlayer/musicPlayerContent';
 
 const MusicPlayer = () => {
-  const musicPlayer = useMusicPlayer();
+  const activeTrackId = useMusicPlayer(state => state.activeId);
+  const setActiveTrackId = useMusicPlayer(state => state.setId);
+  const queueTracksIds = useMusicPlayer(state => state.ids);
   const [track, setTrack] = useState({});
   const trackUrl = track.audioUrl;
 
   useEffect(() => {
-    if (!musicPlayer.activeId)
+    if (!activeTrackId)
       return;
 
     const fetchTrack = async () => {
-      const response = await fetch(`http://localhost:5135/api/v1/tracks/${ musicPlayer.activeId }?includes=Album.Authors`,
+      const response = await fetch(`http://localhost:5135/api/v1/tracks/${ activeTrackId }?includes=Album.Authors`,
         { cache: 'force-cache' });
       const track = await response.json();
       setTrack(track);
     };
 
     fetchTrack();
-  }, [musicPlayer.activeId]);
+  }, [activeTrackId]);
 
-  if (!track || !trackUrl || !musicPlayer.activeId) {
+  if (!track || !trackUrl || !activeTrackId) {
     return null;
   }
 
   const handleNext = () => {
-    if (musicPlayer.ids.length === 0)
+    if (queueTracksIds.length === 0)
       return;
 
-    const currentIndex = musicPlayer.ids.findIndex((id) => id === musicPlayer.activeId);
-    const nextTrack = musicPlayer.ids[currentIndex + 1];
+    const currentIndex = queueTracksIds.findIndex((id) => id === activeTrackId);
+    const nextTrack = queueTracksIds[currentIndex + 1];
 
     if (!nextTrack)
-      return musicPlayer.setId(musicPlayer.ids[0]); //TODO Repeat logic
+      return setActiveTrackId(queueTracksIds[0]); //TODO Repeat logic
 
-    musicPlayer.setId(nextTrack);
+    setActiveTrackId(nextTrack);
   };
 
   const handlePrevious = () => {
-    if (musicPlayer.ids.length === 0)
+    if (queueTracksIds.length === 0)
       return;
 
-    const currentIndex = musicPlayer.ids.findIndex((id) => id === musicPlayer.activeId);
-    const previousTrack = musicPlayer.ids[currentIndex - 1];
+    const currentIndex = queueTracksIds.findIndex((id) => id === activeTrackId);
+    const previousTrack = queueTracksIds[currentIndex - 1];
 
     if (!previousTrack)
-      return musicPlayer.setId(musicPlayer.ids[musicPlayer.ids.length - 1]);
+      return setActiveTrackId(queueTracksIds[queueTracksIds.length - 1]);
 
-    musicPlayer.setId(previousTrack);
+    setActiveTrackId(previousTrack);
   };
 
   const handleEnded = () => {

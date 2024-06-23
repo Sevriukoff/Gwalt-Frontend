@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { useAuth } from '@/hoc/authContext';
-import RoundFollowButton from '@/components/followButtons/RoundFollowButton';
+import RoundFollowButton from '@/components/buttons/followButtons/RoundFollowButton';
 import Link from 'next/link';
 
 const ArtistCard = (
@@ -17,7 +17,7 @@ const ArtistCard = (
   const { userId } = useAuth();
 
   return (
-    <div className='flex flex-col w-full'>
+    <div className='flex flex-col w-full p-3'>
       <div className='relative rounded-full w-full pb-[100%] overflow-hidden group'>
         <div className='absolute inset-0 rounded-full shadow-lg' />
         <Image

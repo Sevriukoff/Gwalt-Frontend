@@ -1,48 +1,41 @@
-'use client';
-
-'use client';
-
 import React, { useEffect, useState } from 'react';
 import ActionButton from '@/components/buttons/actionButton';
-import useMusicPlayer from '@/hooks/useMusicPlayer';
-import useOnPlay from '@/hooks/useOnPlay';
-import { twMerge } from 'tailwind-merge';
 import { useLazyTracksIds } from '@/services/client/queries/trackQueries';
+import useMusicPlayer from '@/hooks/useMusicPlayer';
+import { twMerge } from 'tailwind-merge';
 
-export const PlayButton = ({
-                             iconWidth = 20,
-                             iconHeight = 20,
-                             className = '',
-                             containerClassName = '',
-                             whenPlayingShowBars = true,
-                             whenPlayingShowIcon = true,
-                             preload = false,
-                             children: soundBar,
-                             disabled,
-                             onClick,
-                             fetchTracksUrl,
-                             ...props
-                           }) => {
+const AlbumPlayButton = ({
+                           iconWidth = 20,
+                           iconHeight = 20,
+                           className = '',
+                           containerClassName = '',
+                           whenPlayingShowBars = true,
+                           whenPlayingShowIcon = true,
+                           preload = false,
+                           children: soundBar,
+                           disabled,
+                           fetchTracksUrl,
+                           ...props
+                         }) => {
   const [isHovered, setIsHovered] = useState(false);
 
   const { data: tracksIds = [], isMutating, trigger } = useLazyTracksIds(fetchTracksUrl);
-  const { activeId, isPlaying, setIsPlaying } = useMusicPlayer((state) => ({
-    activeId: state.activeId,
-    isPlaying: state.isPlaying,
-    setIsPlaying: state.setIsPlaying,
-  }));
-  const onPlay = useOnPlay(tracksIds);
+
+  const activeTrackId = useMusicPlayer(state => state.activeId);
+  const setActiveTrackId = useMusicPlayer(state => state.setId);
+  const setActiveTracksIds = useMusicPlayer(state => state.setIds);
+
+  const isPlayingActiveTrack = useMusicPlayer(state => state.isPlaying);
+  const setIsPlayingActiveTrack = useMusicPlayer(state => state.setIsPlaying);
 
   useEffect(() => {
     if (preload && tracksIds.length === 0) {
       trigger();
     }
-  }, []);
+  }, [preload, tracksIds, trigger]);
 
-  const shouldBeActive = tracksIds.includes(activeId);
-  const isInternalPlaying = shouldBeActive && isPlaying;
-
-  console.log('render');
+  const shouldBeActive = tracksIds.includes(activeTrackId);
+  const isInternalPlaying = shouldBeActive && isPlayingActiveTrack;
 
   const handleMouseEnter = async () => {
     if (!isHovered && !isMutating && tracksIds.length === 0) {
@@ -54,19 +47,20 @@ export const PlayButton = ({
   };
 
   const onPlayClick = () => {
-    if (onClick) onClick();
-
-    if (isMutating || tracksIds.length === 0) return;
+    if (isMutating || tracksIds.length === 0) {
+      return;
+    }
 
     if (!shouldBeActive) {
-      onPlay(tracksIds[0]);
+      setActiveTrackId(tracksIds[0]);
+      setActiveTracksIds(tracksIds);
       return;
     }
 
     if (isInternalPlaying) {
-      setIsPlaying(false);
+      setIsPlayingActiveTrack(false);
     } else {
-      setIsPlaying(true);
+      setIsPlayingActiveTrack(true);
     }
   };
 
@@ -118,3 +112,5 @@ export const PlayButton = ({
     </div>
   );
 };
+
+export default AlbumPlayButton;

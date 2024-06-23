@@ -89,10 +89,16 @@ const Waveform = ({ trackId = 0, peaks = [], duration = 0 }) => {
   }, [peaks, duration, setProgress, setIsSeekingFromWaveform]);
 
   useEffect(() => {
-    if (wavesurferRef.current && trackId === activeId) {
-      wavesurferRef.current.seekTo(progress);
+    if (wavesurferRef.current && trackId === activeId) { // TODO: Трек id уже другой при смене трека
+      wavesurferRef.current.seekTo(progress ? progress : 0);
     }
   }, [progress, trackId, activeId]);
+
+  useEffect(() => { //TODO: сделал пока так
+    if (wavesurferRef.current) {
+      wavesurferRef.current.seekTo(0);
+    }
+  }, [activeId]);
 
   return (
     <div

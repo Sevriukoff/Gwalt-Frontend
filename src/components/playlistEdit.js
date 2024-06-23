@@ -4,7 +4,8 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import MaskedIcon from '@/components/maskedIcon';
 import TrackUpload from '@/components/trackUpload';
-import { base64ToFile } from '@/utils/common/files';
+import { base64ToFile } from '@/services/common/files';
+import fetchRest from '@/services/common/fetchRest';
 
 const PlaylistEdit = ({ selectedFiles }) => {
   const [imageSrc, setImageSrc] = useState('');
@@ -38,7 +39,7 @@ const PlaylistEdit = ({ selectedFiles }) => {
 
   const fetchGenres = async () => {
     try {
-      const response = await fetch('/api/genres');
+      const response = await fetchRest('/v1/genres');
       const data = await response.json();
       setGenres(data.map(genre => ({ value: genre.id, label: genre.name })));
     } catch (error) {
@@ -209,7 +210,7 @@ const PlaylistEdit = ({ selectedFiles }) => {
   };
 
   return (
-    <div className='max-w-4xl mx-auto p-6'>
+    <div className='max-w-4xl mx-auto p-6 h-lvh'>
       <div className='grid grid-cols-[auto_1fr] gap-5 mb-4'>
         <div className='col-span-1'>
           <div className='relative mb-4 w-[260px]'>

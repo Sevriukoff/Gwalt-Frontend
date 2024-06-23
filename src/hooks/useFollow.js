@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useAuth } from '@/hoc/authContext';
 import useModal from '@/hooks/useModal';
-import fetchRest from '@/utils/common/fetchRest';
+import fetchRest from '@/services/common/fetchRest';
 import { toast } from 'react-hot-toast';
 import ModalNames from '@/constants/modalNames';
 
