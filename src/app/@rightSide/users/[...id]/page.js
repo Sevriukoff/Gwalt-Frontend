@@ -1,5 +1,5 @@
 import React from 'react';
-import fetchRest from '@/utils/common/fetchRest';
+import fetchRest from '@/services/common/fetchRest';
 
 const fetchUser = async (id) => {
   try {

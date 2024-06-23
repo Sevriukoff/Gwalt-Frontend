@@ -1,6 +1,7 @@
 import React from 'react';
-import fetchRest from '@/utils/common/fetchRest';
+import fetchRest from '@/services/common/fetchRest';
 import Track from '@/components/track';
+import isIdValid from '@/services/common/idChecker';
 
 const fetchUser = async (id) => {
   try {
@@ -22,18 +23,26 @@ const fetchTracks = async (id) => {
 
 const CenterBlockUserPage = async ({ params }) => {
   const userPageId = params.id;
+
+  if (!isIdValid(userPageId)) {
+    return null;
+  }
+
   const tracks = await fetchTracks(userPageId);
+  const tracksIds = tracks.map(x => x.id);
 
   return (
     <div className='flex flex-col gap-8'>
       {
         tracks.map((track) => (
-          <Track id={ track.id }
+          <Track key={ track.id }
+                 id={ track.id }
+                 tracksIds={ tracksIds }
                  title={ track.title }
                  trackDuration={ track.duration }
                  imgUrl={ track.coverUrl }
                  genres={ track.genres }
-                 author={ track.authors }
+                 authors={ track.authors }
                  date={ track.releaseDate }
                  like={ track.likesCount }
                  listensCount={ track.listensCount }

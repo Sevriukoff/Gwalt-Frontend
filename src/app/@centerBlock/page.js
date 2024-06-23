@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react';
 import SongList from '@/components/songList';
 import HomeComponent from '@/components/homeComponent';
-import fetchRest from '@/utils/common/fetchRest';
+import fetchRest from '@/services/common/fetchRest';
 import AlbumsCarousel, { AlbumsCarouselSkeleton } from '@/app/@centerBlock/albumsCarousel';
 import ArtistsCarousel, { ArtistsCarouselSkeleton } from '@/app/@centerBlock/artistsCarousel';
 

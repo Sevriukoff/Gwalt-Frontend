@@ -1,6 +1,6 @@
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
-import { getAuthUserId } from '@/utils/server/auth';
+import { getAuthUserId } from '@/services/server/auth';
 
 export async function POST(req, res) {
 

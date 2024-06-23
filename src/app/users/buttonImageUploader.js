@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useRef } from 'react';
-import ActionButton from '@/components/actionButton';
+import ActionButton from '@/components/buttons/actionButton';
 import ModalNames from '@/constants/modalNames';
 import useModal from '@/hooks/useModal';
 

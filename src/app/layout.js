@@ -5,14 +5,14 @@ import { Inter, Roboto } from 'next/font/google';
 import React from 'react';
 import Header from '@/components/header/header';
 import { AuthProvider } from '@/hoc/authContext';
-import { getAuthUserId, isAuth } from '@/utils/server/auth';
+import { getAuthUserId, isAuth } from '@/services/server/auth';
 import Footer from '@/components/footer';
 import MusicPlayer from '@/components/musicPlayer/musicPlayer';
 import PlayerLayout from '@/components/playerLayout';
 import ModalProvider from '@/providers/modalProvider';
 import ToasterProvider from '@/providers/toasterProvider';
 import { SWRProvider } from '@/providers/swrProvider';
-import fetchRest from '@/utils/common/fetchRest';
+import fetchRest from '@/services/common/fetchRest';
 import { Theme } from '@radix-ui/themes';
 
 const inter = Inter({ subsets: ['latin'] });

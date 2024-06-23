@@ -1,9 +1,9 @@
 import React from 'react';
-import fetchRest from '@/utils/common/fetchRest';
+import fetchRest from '@/services/common/fetchRest';
 import UserNavigation from '@/app/users/[...id]/userNavigation';
 import Image from 'next/image';
 import ButtonImageUploader from '@/app/users/buttonImageUploader';
-import { getAuthUserId, isAuth } from '@/utils/server/auth';
+import { getAuthUserId, isAuth } from '@/services/server/auth';
 
 const fetchUser = async (id) => {
   try {

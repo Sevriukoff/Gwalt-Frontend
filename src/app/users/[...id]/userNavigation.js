@@ -2,8 +2,8 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import ActionButton from '@/components/actionButton';
-import FollowButton from '@/components/followButtons/followButton';
+import ActionButton from '@/components/buttons/actionButton';
+import FollowButton from '@/components/buttons/followButtons/followButton';
 import React from 'react';
 import useModal from '@/hooks/useModal';
 import ModalNames from '@/constants/modalNames';

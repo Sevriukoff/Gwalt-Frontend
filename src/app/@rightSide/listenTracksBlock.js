@@ -1,6 +1,7 @@
 import React from 'react';
 import MaskedIcon from '@/components/maskedIcon';
 import TracksBlock from '@/components/tracksBlock';
+import { HistoryTrackItem } from '@/components/trackItem';
 
 const ListenTracksBlock = async ({ listenPromise }) => {
   const listens = await listenPromise;
@@ -9,7 +10,8 @@ const ListenTracksBlock = async ({ listenPromise }) => {
     <TracksBlock
       icon={ (<MaskedIcon src='/calendar.svg' alt='like-icon' className='text-[#999] w-4 h-4' />) }
       title='Прослушанные'
-      tracks={ listens.map(x => x.track) }>
+      tracks={ listens }
+      trackItem={ HistoryTrackItem }>
       {
         listens && listens.length !== 0 ? null : (
           <div className='flex flex-col items-center gap-6'>
