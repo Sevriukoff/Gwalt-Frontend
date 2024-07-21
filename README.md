@@ -1,36 +1,43 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<br>
 
-## Getting Started
+<div align="center">
 
-First, run the development server:
+[<img src="https://i.ibb.co/3cn0gFH/Gwalt-Logopng-Simple.png" alt="Gwalt-Logopng-Simple" border="0" width="180px">](https://ibb.co/QM46yHG)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+<h1 align="center">Gwalt Web</h1>
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+![Team](https://img.shields.io/badge/Sevriukoff%20Team-9388D8?style=for-the-badge)
+![Release](https://img.shields.io/github/package-json/v/Sevriukoff/Gwalt-Frontend?style=for-the-badge&color=9388D8)
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+![Static Badge](https://img.shields.io/badge/React-black?style=for-the-badge&logo=react)
+![Static Badge](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js)
+![Static Badge](https://img.shields.io/badge/swr-black?style=for-the-badge&logo=swr)
+![Static Badge](https://img.shields.io/badge/tailwind-black?style=for-the-badge&logo=data:image/svg%2bxml;base64,PHN2ZyBoZWlnaHQ9IjE1MDQiIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIiB3aWR0aD0iMjUwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2aWV3Qm94PSIwIDAgMjU2IDE1My42Ij48bGluZWFyR3JhZGllbnQgaWQ9ImEiIHgxPSItMi43NzglIiB5MT0iMzIlIiB5Mj0iNjcuNTU2JSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjMjI5OGJkIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjMGVkN2I1Ii8+PC9saW5lYXJHcmFkaWVudD48cGF0aCBkPSJNMTI4IDBDOTMuODY3IDAgNzIuNTMzIDE3LjA2NyA2NCA1MS4yIDc2LjggMzQuMTMzIDkxLjczMyAyNy43MzMgMTA4LjggMzJjOS43MzcgMi40MzQgMTYuNjk3IDkuNDk5IDI0LjQwMSAxNy4zMThDMTQ1Ljc1MSA2Mi4wNTcgMTYwLjI3NSA3Ni44IDE5MiA3Ni44YzM0LjEzMyAwIDU1LjQ2Ny0xNy4wNjcgNjQtNTEuMi0xMi44IDE3LjA2Ny0yNy43MzMgMjMuNDY3LTQ0LjggMTkuMi05LjczNy0yLjQzNC0xNi42OTctOS40OTktMjQuNDAxLTE3LjMxOEMxNzQuMjQ5IDE0Ljc0MyAxNTkuNzI1IDAgMTI4IDB6TTY0IDc2LjhDMjkuODY3IDc2LjggOC41MzMgOTMuODY3IDAgMTI4YzEyLjgtMTcuMDY3IDI3LjczMy0yMy40NjcgNDQuOC0xOS4yIDkuNzM3IDIuNDM0IDE2LjY5NyA5LjQ5OSAyNC40MDEgMTcuMzE4QzgxLjc1MSAxMzguODU3IDk2LjI3NSAxNTMuNiAxMjggMTUzLjZjMzQuMTMzIDAgNTUuNDY3LTE3LjA2NyA2NC01MS4yLTEyLjggMTcuMDY3LTI3LjczMyAyMy40NjctNDQuOCAxOS4yLTkuNzM3LTIuNDM0LTE2LjY5Ny05LjQ5OS0yNC40MDEtMTcuMzE4QzExMC4yNDkgOTEuNTQzIDk1LjcyNSA3Ni44IDY0IDc2Ljh6IiBmaWxsPSJ1cmwoI2EpIi8+PC9zdmc+)
+![Static Badge](https://img.shields.io/badge/zustand-black?logoSize=36&style=for-the-badge&logo=data:image/png;base64,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)
+![Static Badge](https://img.shields.io/badge/radix-black?style=for-the-badge&logo=radix-ui)
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+<a href="https://ibb.co/QY3K6vD"><img src="https://i.ibb.co/WB42cvV/Gwalt1.png" alt="Gwalt1" border="0" width="800px"></a>
 
-## Learn More
+</div>
 
-To learn more about Next.js, take a look at the following resources:
+## Опсисание
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**Gwalt Web** - это стриминговое веб приложение платформы Gwalt для прослушивания и загрузки своей музыки. В дальнейшем ожидается выход мобильной версии данного приложения, для удобного прослушивания музыки с телефона.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Особенности
 
-## Deploy on Vercel
+- Быстрый поиск по всем объектам, треки, альбомы, пользователи
+- Стриминг данных
+- Оптимистичные обновления с помощью swr
+- Отслеживания качества прослушивания треков
+- Оценка треков и альбомов
+- Подписка на пользователей
+- Просмотр истории лайков и прослушиваний
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Скриншоты
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+<div align="center">
+  <a href="https://ibb.co/qDr1JzW"><img src="https://i.ibb.co/kGScmp9/Gwalt2.png" alt="Gwalt2" border="0" width="800px"></a>
+  <a href="https://ibb.co/m9VjpP7"><img src="https://i.ibb.co/D9HJdjn/Gwalt3.png" alt="Gwalt3" border="0" width="800px"></a>
+  <a href="https://ibb.co/dDXtQQp"><img src="https://i.ibb.co/2dRSjjM/Gwalt4.png" alt="Gwalt4" border="0" width="800px"></a>
+<div/>
